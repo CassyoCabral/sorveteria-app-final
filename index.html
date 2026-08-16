@@ -48,7 +48,7 @@
   }
   .wrap{max-width:560px; margin:0 auto; padding:0 16px;}
 
-  /* Top Bar (Barra Superior Preta Centralizada) */
+  /* Top Bar */
   .top-app-bar {
     background-color: #1E1E1E;
     color: #FFFFFF;
@@ -213,18 +213,46 @@
   .icon-btn.danger{color:var(--danger);}
   .icon-btn:disabled{opacity:.4;}
 
+  /* --- MODAL / BOTTOM SHEET --- */
   .modal-bg{
     position:fixed; inset:0; background:rgba(20,30,26,0.45); z-index:100; display:none;
     align-items:flex-end; justify-content:center;
   }
   .modal-bg.show{display:flex;}
+  
   .modal{
-    background:var(--surface); width:100%; max-width:560px; border-radius:20px 20px 0 0;
-    max-height:86vh; display:flex; flex-direction:column; animation:slideup .18s ease-out;
+    background:var(--surface); width:100%; max-width:560px; border-radius:24px 24px 0 0;
+    height: 50vh; /* Abre na metade da tela por padrão */
+    min-height: 25vh;
+    max-height: 92vh;
+    display:flex; flex-direction:column;
+    animation:slideup .2s cubic-bezier(0.1, 0.9, 0.2, 1);
+    position: relative;
+    touch-action: none;
+    transition: height 0.05s ease-out;
   }
-  @keyframes slideup{from{transform:translateY(20px); opacity:.4} to{transform:translateY(0); opacity:1}}
+
+  /* Handle para arrastar a altura do menu */
+  .drag-handle-area {
+    width: 100%;
+    padding: 10px 0 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: ns-resize;
+    touch-action: none;
+  }
+  .drag-handle-bar {
+    width: 42px;
+    height: 5px;
+    background-color: #D1D5DB;
+    border-radius: 3px;
+  }
+
+  @keyframes slideup{from{transform:translateY(100%); opacity:0} to{transform:translateY(0); opacity:1}}
+  
   .modal-head{
-    padding:16px 16px 10px; display:flex; justify-content:space-between; align-items:center;
+    padding:4px 16px 10px; display:flex; justify-content:space-between; align-items:center;
     border-bottom:1px solid var(--border);
   }
   .modal-head h3{font-size:17px;}
@@ -233,6 +261,8 @@
   .modal-body{
     padding:14px 16px calc(24px + env(safe-area-inset-bottom, 0px)); 
     overflow-y:auto;
+    flex: 1;
+    touch-action: pan-y;
   }
   
   .chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; margin-bottom:8px;}
@@ -296,7 +326,6 @@
 </head>
 <body>
 
-<!-- Barra Superior Centralizada -->
 <div class="top-app-bar">
   Sorveteria Gelo Doce
 </div>
@@ -353,7 +382,12 @@
 </nav>
 
 <div class="modal-bg" id="modalBg">
-  <div class="modal" id="modalBox"></div>
+  <div class="modal" id="modalBox">
+    <div class="drag-handle-area" id="dragHandle">
+      <div class="drag-handle-bar"></div>
+    </div>
+    <div id="modalInnerContent" style="display:flex; flex-direction:column; height:100%; overflow:hidden;"></div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -411,8 +445,63 @@
     document.getElementById("fabAdd").disabled = !ok;
   }
 
-  function showModal(){ document.getElementById("modalBg").classList.add("show"); }
-  function closeModal(){ document.getElementById("modalBg").classList.remove("show"); }
+  // --- LÓGICA DE DRAG / REDIMENSIONAMENTO DO MODAL ---
+  var modalBox = document.getElementById("modalBox");
+  var dragHandle = document.getElementById("dragHandle");
+  var isDragging = false;
+  var startY = 0;
+  var startHeight = 0;
+
+  function showModal(){
+    modalBox.style.height = "50vh"; // Reseta para a metade da tela ao abrir
+    document.getElementById("modalBg").classList.add("show");
+  }
+
+  function closeModal(){
+    document.getElementById("modalBg").classList.remove("show");
+  }
+
+  function onDragStart(e) {
+    isDragging = true;
+    startY = e.touches ? e.touches[0].clientY : e.clientY;
+    startHeight = modalBox.getBoundingClientRect().height;
+    modalBox.style.transition = 'none';
+  }
+
+  function onDragMove(e) {
+    if (!isDragging) return;
+    var currentY = e.touches ? e.touches[0].clientY : e.clientY;
+    var deltaY = startY - currentY; // Arrastar para cima aumenta a altura
+    var newHeight = startHeight + deltaY;
+    var windowHeight = window.innerHeight;
+
+    var newHeightVh = (newHeight / windowHeight) * 100;
+
+    if (newHeightVh < 18) {
+      closeModal();
+      isDragging = false;
+      return;
+    }
+
+    if (newHeightVh >= 20 && newHeightVh <= 92) {
+      modalBox.style.height = newHeightVh + 'vh';
+    }
+  }
+
+  function onDragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    modalBox.style.transition = 'height 0.05s ease-out';
+  }
+
+  dragHandle.addEventListener('touchstart', onDragStart, { passive: true });
+  window.addEventListener('touchmove', onDragMove, { passive: true });
+  window.addEventListener('touchend', onDragEnd);
+
+  dragHandle.addEventListener('mousedown', onDragStart);
+  window.addEventListener('mousemove', onDragMove);
+  window.addEventListener('mouseup', onDragEnd);
+
   document.getElementById("modalBg").addEventListener("click", function(e){
     if(e.target === this || e.target.closest("[data-close]")) closeModal();
   });
@@ -555,8 +644,8 @@
   document.getElementById("fabAdd").addEventListener("click", function(){ openNewOrderModal(); });
 
   function openNewOrderModal(){
-    var box = document.getElementById("modalBox");
-    box.innerHTML = '<div class="modal-head"><h3>Novo pedido</h3><button class="modal-close" data-close>✕</button></div>'
+    var container = document.getElementById("modalInnerContent");
+    container.innerHTML = '<div class="modal-head"><h3>Novo pedido</h3><button class="modal-close" data-close>✕</button></div>'
       + '<div class="modal-body"><div class="center-form">'
         + '<label>Nome do cliente</label>'
         + '<input type="text" id="newCustomerName" placeholder="Ex: Maria, João...">'
@@ -603,12 +692,12 @@
       return '<div class="chips">'+chips+'</div><div id="pickItemsList">'+items+'</div>';
     }
 
-    var box = document.getElementById("modalBox");
-    box.innerHTML = '<div class="modal-head"><h3>Adicionar item — '+escapeHtml(order.customerName)+'</h3><button class="modal-close" data-close>✕</button></div>'
+    var container = document.getElementById("modalInnerContent");
+    container.innerHTML = '<div class="modal-head"><h3>Adicionar item — '+escapeHtml(order.customerName)+'</h3><button class="modal-close" data-close>✕</button></div>'
       + '<div class="modal-body" id="pickerBody">'+bodyHtml(activeCat)+'</div>';
     showModal();
 
-    box.addEventListener("click", async function handler(e){
+    container.addEventListener("click", async function handler(e){
       var chip = e.target.closest("[data-pickcat]");
       if(chip){
         activeCat = chip.dataset.pickcat;
@@ -809,8 +898,8 @@
   });
 
   document.getElementById("btnAddCat").addEventListener("click", function(){
-    var box = document.getElementById("modalBox");
-    box.innerHTML = '<div class="modal-head"><h3>Nova categoria</h3><button class="modal-close" data-close>✕</button></div>'
+    var container = document.getElementById("modalInnerContent");
+    container.innerHTML = '<div class="modal-head"><h3>Nova categoria</h3><button class="modal-close" data-close>✕</button></div>'
       + '<div class="modal-body"><div class="center-form">'
         + '<label>Nome da categoria</label>'
         + '<input type="text" id="newCatName" placeholder="Ex: Sobremesas...">'
