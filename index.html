@@ -59,6 +59,7 @@ nav.tabs button.active{color:var(--green);}
 .order-card.open .chev{transform:rotate(180deg);}
 /* STATUS */
 .order-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;padding:4px 7px;border-radius:20px;margin-top:5px;background:var(--green-light);color:var(--green);}
+.order-status.warn{background:#FDF3DD;color:#B8860B;}
 /* ITEMS */
 .item-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:14px;}
 .item-row .iname{flex:1;min-width:0;}
@@ -463,6 +464,14 @@ function finalTotal(order) {
     const discount = Number(order.discount) || 0;
     return Math.max(0, subtotal - discount);
 }
+function paidSoFar(order) {
+    return (order.payments || []).reduce(function (sum, p) {
+        return sum + (Number(p.amount) || 0);
+    }, 0);
+}
+function remainingTotal(order) {
+    return Math.max(0, Math.round((finalTotal(order) - paidSoFar(order)) * 100) / 100);
+}
 function todayStart() {
     const d = new Date();
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -690,16 +699,23 @@ function renderOrders() {
         const isOpen = state.openOrderId === o.id;
         const items = o.items || [];
         const total = orderTotal(o);
+        const paid = paidSoFar(o);
+        const remaining = remainingTotal(o);
         const age = Date.now() - Number(o.createdAt || Date.now());
         const ageHours = age / 3600000;
         let statusText = "Em aberto";
+        let statusClass = "";
         if (ageHours > 2) {
             statusText = "Aberto há mais de 2h";
+        }
+        if (paid > 0) {
+            statusText = `Pago ${money(paid)} • Falta ${money(remaining)}`;
+            statusClass = "warn";
         }
         const itemsHtml = items.length ? items.map(function (it) {
             return (`<div class="item-row"><div class="iname">${escapeHtml(it.name)}<small>${escapeHtml(it.categoryName || "")} • ${money(it.price)} un.</small></div><div class="qty-ctrl"><button data-act="dec" data-order="${o.id}" data-item="${it.id}">−</button><span>${it.qty}</span><button data-act="inc" data-order="${o.id}" data-item="${it.id}">+</button></div><div class="iprice">${money(it.price * it.qty)}</div><button class="irm" data-act="rm" data-order="${o.id}" data-item="${it.id}">✕</button></div>`);
         }).join("") : `<div style="font-size:13px;color:var(--text-soft);padding:6px 0;">Nenhum item ainda.</div>`;
-        return (`<div class="card order-card ${isOpen ? "open" : ""}" data-order="${o.id}"><div class="top" data-act="toggle" data-order="${o.id}"><div><div class="name">Comanda ${escapeHtml(o.customerName)}</div><div class="meta">${items.length} item(ns) • ${timeLabel(o.createdAt)}</div><div class="order-status">● ${statusText}</div></div><div style="display:flex;align-items:center;gap:8px;"><div class="total">${money(total)}</div><span class="chev">▾</span></div></div><div class="items">${itemsHtml}<div class="row-btns"><button class="btn btn-green" data-act="additem" data-order="${o.id}">+ Item</button><button class="btn btn-blue" data-act="checkout" data-order="${o.id}">💳 Fechar</button></div></div></div>`);
+        return (`<div class="card order-card ${isOpen ? "open" : ""}" data-order="${o.id}"><div class="top" data-act="toggle" data-order="${o.id}"><div><div class="name">Comanda ${escapeHtml(o.customerName)}</div><div class="meta">${items.length} item(ns) • ${timeLabel(o.createdAt)}</div><div class="order-status ${statusClass}">● ${statusText}</div></div><div style="display:flex;align-items:center;gap:8px;"><div class="total">${money(paid > 0 ? remaining : total)}</div><span class="chev">▾</span></div></div><div class="items">${itemsHtml}<div class="row-btns"><button class="btn btn-green" data-act="additem" data-order="${o.id}">+ Item</button><button class="btn btn-blue" data-act="checkout" data-order="${o.id}">💳 Fechar</button></div></div></div>`);
     }).join("");
 }
 document.getElementById("orderSearch").addEventListener("input", function () {
@@ -803,6 +819,7 @@ function openNewOrderModal() {
                     items: [],
                     discount: 0,
                     paymentMethod: null,
+                    payments: [],
                     createdAt: Date.now()
                 });
                 orderId = ref.id;
@@ -924,18 +941,36 @@ function openItemPicker(orderId) {
     };
 }
 function openCheckout(orderId) {
-    const order = state.orders.find(o => o.id === orderId);
+    let order = state.orders.find(o => o.id === orderId);
     if (!order)
         return;
     let discount = Number(order.discount) || 0;
     let payment = order.paymentMethod || "pix";
     const subtotal = orderTotal(order);
     function renderCheckout() {
+        order = state.orders.find(o => o.id === orderId) || order;
         const total = Math.max(0, subtotal - discount);
-        setModalContent(`<div class="modal-head"><h3>Fechar venda</h3><button class="modal-close" data-close>✕</button></div><div class="modal-body"><div style="font-family:Fredoka;font-size:18px;">Comanda ${escapeHtml(order.customerName)}</div><div style="font-size:12px;color:var(--text-soft);margin-top:3px;">${order.items.length} item(ns)</div><div class="checkout-total"><div class="checkout-line"><span>Subtotal</span><b>${money(subtotal)}</b></div><div class="checkout-line"><span>Desconto</span><b style="color:var(--danger);">-${money(discount)}</b></div><div class="checkout-total-final"><span>TOTAL</span><span>${money(total)}</span></div></div><label style="font-size:12.5px;font-weight:800;color:var(--text-soft);display:block;margin:10px 0 6px;">Desconto</label><input type="number" id="checkoutDiscount" min="0" step="0.01" value="${discount}" style="width:100%;"><label style="font-size:12.5px;font-weight:800;color:var(--text-soft);display:block;margin:12px 0 6px;">Forma de pagamento</label><div class="payment-grid">${paymentButton("pix", "📱 PIX", payment)}${paymentButton("dinheiro", "💵 Dinheiro", payment)}${paymentButton("debito", "💳 Débito", payment)}${paymentButton("credito", "💳 Crédito", payment)}</div><button class="btn btn-green btn-block" id="finishSale" style="margin-top:16px;">✓ Finalizar venda — ${money(total)}</button></div>`);
-        document.getElementById("checkoutDiscount").addEventListener("input", function () {
-            discount = Math.max(0, Math.min(subtotal, Number(this.value) || 0));
-            renderCheckout();
+        const payments = order.payments || [];
+        const paid = paidSoFar(order);
+        const remaining = Math.max(0, Math.round((total - paid) * 100) / 100);
+        const paymentsHtml = payments.length ? `<div style="margin-top:10px;border-top:1px dashed var(--border);padding-top:8px;">${payments.map(function (p, i) {
+            return (`<div class="item-row"><div class="iname">${paymentLabel(p.method)}<small>${timeLabel(p.date)}</small></div><div class="iprice">${money(p.amount)}</div><button class="irm" data-act="rmpayment" data-idx="${i}">✕</button></div>`);
+        }).join("")}</div>` : "";
+        const amountValue = remaining > 0 ? remaining : total;
+        const initialBtnLabel = amountValue >= remaining - 0.004 ? `✓ Finalizar venda — ${money(remaining)}` : `✓ Registrar pagamento parcial — ${money(amountValue)}`;
+        setModalContent(`<div class="modal-head"><h3>Fechar venda</h3><button class="modal-close" data-close>✕</button></div><div class="modal-body"><div style="font-family:Fredoka;font-size:18px;">Comanda ${escapeHtml(order.customerName)}</div><div style="font-size:12px;color:var(--text-soft);margin-top:3px;">${order.items.length} item(ns)</div><div class="checkout-total"><div class="checkout-line"><span>Subtotal</span><b>${money(subtotal)}</b></div><div class="checkout-line"><span>Desconto</span><b style="color:var(--danger);">-${money(discount)}</b></div>${paid > 0 ? `<div class="checkout-line"><span>Já pago</span><b style="color:var(--green);">-${money(paid)}</b></div>` : ""}<div class="checkout-total-final"><span>${paid > 0 ? "RESTANTE" : "TOTAL"}</span><span>${money(remaining)}</span></div></div>${paymentsHtml}<label style="font-size:12.5px;font-weight:800;color:var(--text-soft);display:block;margin:10px 0 6px;">Desconto</label><input type="number" id="checkoutDiscount" min="0" step="0.01" value="${discount}" style="width:100%;" ${paid > 0 ? "disabled" : ""}><label style="font-size:12.5px;font-weight:800;color:var(--text-soft);display:block;margin:12px 0 6px;">Valor a pagar agora</label><input type="number" id="checkoutAmount" min="0.01" step="0.01" max="${remaining}" value="${amountValue}" style="width:100%;"><label style="font-size:12.5px;font-weight:800;color:var(--text-soft);display:block;margin:12px 0 6px;">Forma de pagamento</label><div class="payment-grid">${paymentButton("pix", "📱 PIX", payment)}${paymentButton("dinheiro", "💵 Dinheiro", payment)}${paymentButton("debito", "💳 Débito", payment)}${paymentButton("credito", "💳 Crédito", payment)}</div><button class="btn btn-green btn-block" id="finishSale" style="margin-top:16px;">${initialBtnLabel}</button></div>`);
+        if (paid <= 0) {
+            document.getElementById("checkoutDiscount").addEventListener("input", function () {
+                discount = Math.max(0, Math.min(subtotal, Number(this.value) || 0));
+                renderCheckout();
+            });
+        }
+        const amountInput = document.getElementById("checkoutAmount");
+        amountInput.addEventListener("input", function () {
+            const btn = document.getElementById("finishSale");
+            let v = Number(this.value) || 0;
+            v = Math.max(0, v);
+            btn.textContent = v >= remaining - 0.004 ? `✓ Finalizar venda — ${money(remaining)}` : `✓ Registrar pagamento parcial — ${money(v)}`;
         });
         document.querySelectorAll("[data-payment]").forEach(btn => {
             btn.addEventListener("click", function () {
@@ -944,7 +979,41 @@ function openCheckout(orderId) {
             });
         });
         document.getElementById("finishSale").addEventListener("click", function () {
-            finishSale(order, discount, payment);
+            let amount = Number(document.getElementById("checkoutAmount").value) || 0;
+            if (amount <= 0) {
+                toast("Digite um valor válido para pagamento");
+                return;
+            }
+            if (amount > remaining + 0.004) {
+                amount = remaining;
+            }
+            if (amount >= remaining - 0.004) {
+                finishSale(order, discount, payment, payments, remaining);
+            }
+            else {
+                registerPartialPayment(order, amount, payment, renderCheckout);
+            }
+        });
+        document.querySelectorAll("[data-act=rmpayment]").forEach(btn => {
+            btn.addEventListener("click", async function () {
+                const idx = Number(this.dataset.idx);
+                const newPayments = payments.filter((p, i) => i !== idx);
+                try {
+                    await updateDoc(doc(db, "pedidos", order.id), {
+                        payments: newPayments
+                    });
+                    order = Object.assign({}, order, { payments: newPayments });
+                    const idx2 = state.orders.findIndex(o => o.id === order.id);
+                    if (idx2 !== -1)
+                        state.orders[idx2] = order;
+                    renderCheckout();
+                    toast("Pagamento removido");
+                }
+                catch (error) {
+                    console.error(error);
+                    toast("Erro ao remover pagamento", true);
+                }
+            });
         });
     }
     renderCheckout();
@@ -953,16 +1022,48 @@ function openCheckout(orderId) {
 function paymentButton(value, label, current) {
     return (`<button class="payment-btn ${value === current ? "active" : ""}" data-payment="${value}">${label}</button>`);
 }
-async function finishSale(order, discount, payment) {
+async function registerPartialPayment(order, amount, payment, onDone) {
+    const roundedAmount = Math.round(amount * 100) / 100;
+    if (!confirm(`Registrar pagamento parcial de ${money(roundedAmount)} via ${paymentLabel(payment)} para a comanda ${order.customerName}? A comanda continuará em aberto com o valor restante.`)) {
+        return;
+    }
+    const newPayments = (order.payments || []).concat([{
+            amount: roundedAmount,
+            method: payment,
+            date: Date.now()
+        }]);
+    try {
+        await updateDoc(doc(db, "pedidos", order.id), {
+            payments: newPayments
+        });
+        const idx = state.orders.findIndex(o => o.id === order.id);
+        if (idx !== -1) {
+            state.orders[idx] = Object.assign({}, state.orders[idx], { payments: newPayments });
+        }
+        toast(`Pagamento parcial de ${money(roundedAmount)} registrado. Restante em aberto.`);
+        if (typeof onDone === "function") {
+            onDone();
+        }
+        renderOrders();
+    }
+    catch (error) {
+        console.error(error);
+        toast("Erro ao registrar pagamento parcial", true);
+    }
+}
+async function finishSale(order, discount, payment, previousPayments, finalAmountDue) {
     const subtotal = orderTotal(order);
-    const final = Math.max(0, subtotal - discount);
-    const paymentNames = {
-        pix: "PIX",
-        dinheiro: "Dinheiro",
-        debito: "Débito",
-        credito: "Crédito"
-    };
-    if (!confirm(`Finalizar venda da comanda ${order.customerName} por ${money(final)} via ${paymentNames[payment]}?`)) {
+    const total = Math.max(0, subtotal - discount);
+    const payments = (previousPayments || []).concat([{
+            amount: Math.round(finalAmountDue * 100) / 100,
+            method: payment,
+            date: Date.now()
+        }]);
+    const methods = Array.from(new Set(payments.map(p => p.method)));
+    const paymentMethodFinal = methods.length === 1 ? methods[0] : "misto";
+    const paidTotal = payments.reduce((s, p) => s + (Number(p.amount) || 0), 0);
+    const confirmMsg = payments.length > 1 ? `Finalizar venda da comanda ${order.customerName}? Total ${money(total)} pago em ${payments.length} pagamentos.` : `Finalizar venda da comanda ${order.customerName} por ${money(total)} via ${paymentLabel(payment)}?`;
+    if (!confirm(confirmMsg)) {
         return;
     }
     try {
@@ -973,8 +1074,10 @@ async function finishSale(order, discount, payment) {
             items: order.items,
             subtotal: subtotal,
             discount: discount,
-            total: final,
-            paymentMethod: payment,
+            total: total,
+            paidTotal: paidTotal,
+            payments: payments,
+            paymentMethod: paymentMethodFinal,
             closedAt: Date.now(),
             createdAt: order.createdAt || Date.now()
         });
@@ -1016,7 +1119,8 @@ function paymentLabel(method) {
         pix: "📱 PIX",
         dinheiro: "💵 Dinheiro",
         debito: "💳 Débito",
-        credito: "💳 Crédito"
+        credito: "💳 Crédito",
+        misto: "🔀 Misto"
     }[method] || "—";
 }
 function renderHistory() {
@@ -1060,7 +1164,8 @@ function renderHistory() {
                 summaryParts.push(cat + " - " + catMap[cat].join(", "));
             }
             const summary = summaryParts.join(" | ");
-            return (`<div class="hist-card"><div class="top"><div><div class="name">Comanda ${escapeHtml(h.customerName)}</div><div class="time">${timeLabel(h.closedAt)} • ${paymentLabel(h.paymentMethod)}</div></div><div class="total">${money(h.total)}</div></div><div class="items-summary">${escapeHtml(summary)}</div>${Number(h.discount) > 0 ? `<div style="font-size:11px;color:var(--danger);margin-top:5px;">Desconto: ${money(h.discount)}</div>` : ''}<div class="hist-actions"><button class="icon-btn danger" data-act="rmhist" data-hist="${h.id}">🗑 remover</button></div></div>`);
+            const paymentsBreak = (h.payments || []).length > 1 ? `<div style="font-size:11px;color:var(--text-soft);margin-top:5px;">Fechamento parcial: ${h.payments.map(p => `${paymentLabel(p.method)} ${money(p.amount)}`).join(" + ")}</div>` : "";
+            return (`<div class="hist-card"><div class="top"><div><div class="name">Comanda ${escapeHtml(h.customerName)}</div><div class="time">${timeLabel(h.closedAt)} • ${paymentLabel(h.paymentMethod)}</div></div><div class="total">${money(h.total)}</div></div><div class="items-summary">${escapeHtml(summary)}</div>${Number(h.discount) > 0 ? `<div style="font-size:11px;color:var(--danger);margin-top:5px;">Desconto: ${money(h.discount)}</div>` : ''}${paymentsBreak}<div class="hist-actions"><button class="icon-btn danger" data-act="rmhist" data-hist="${h.id}">🗑 remover</button></div></div>`);
         }).join("");
         return (`<div class="hist-day-label">${g.label}</div>${cards}`);
     }).join("");
