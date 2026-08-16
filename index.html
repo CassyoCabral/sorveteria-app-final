@@ -48,20 +48,6 @@
   }
   .wrap{max-width:560px; margin:0 auto; padding:0 16px;}
 
-  /* Top Bar */
-  .top-app-bar {
-    background-color: #1E1E1E;
-    color: #FFFFFF;
-    text-align: center;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px;
-    letter-spacing: 0.3px;
-    position: relative;
-    z-index: 10;
-  }
-
   header{
     background: linear-gradient(135deg, var(--pink-header) 0%, var(--pink-header-light) 100%);
     color:var(--pink-text);
@@ -326,13 +312,9 @@
 </head>
 <body>
 
-<div class="top-app-bar">
-  Sorveteria Gelo Doce
-</div>
-
 <header>
   <div class="wrap">
-    <h1>🍦 Sorveteria Gelo Doce — Pedidos</h1>
+    <h1><h1>🍦 Sorveteria Gelo Doce</h1></h1>
     <div class="sub"><span class="dot off" id="statusDot"></span><span id="headerSub">Conectando ao banco de dados...</span></div>
   </div>
   <svg class="wave" viewBox="0 0 500 30" preserveAspectRatio="none"><path d="M0,15 Q40,30 80,15 T160,15 T240,15 T320,15 T400,15 T480,15 T560,15 V30 H0 Z" fill="#F9F7F8"></path></svg>
