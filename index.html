@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
 <title>Sorveteria • Pedidos</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#5C3D2E">
@@ -38,7 +38,7 @@
     color:var(--text);
     font-family:'Nunito', sans-serif;
     min-height:100vh;
-    padding-bottom:84px;
+    padding-bottom:100px;
   }
   h1,h2,h3, .display{
     font-family:'Fredoka', sans-serif;
@@ -50,7 +50,7 @@
   header{
     background: linear-gradient(135deg, var(--brown) 0%, var(--brown-light) 100%);
     color:#fff;
-    padding:22px 16px 34px;
+    padding:calc(22px + env(safe-area-inset-top, 0px)) 16px 34px;
     position:relative;
     overflow:hidden;
   }
@@ -136,7 +136,7 @@
   .btn-danger-outline{background:#fff; color:var(--danger); border:1.5px solid #F4CFCF;}
   .btn-block{width:100%;}
   .btn-fab{
-    position:fixed; right:18px; bottom:92px; z-index:40;
+    position:fixed; right:18px; bottom:calc(76px + env(safe-area-inset-bottom, 0px)); z-index:40;
     background:var(--green); color:#fff; border:none; border-radius:50%;
     width:56px; height:56px; box-shadow:0 6px 16px rgba(42,157,143,0.4);
     font-size:26px; cursor:pointer;
@@ -197,7 +197,13 @@
   }
   .modal-head h3{font-size:17px;}
   .modal-close{background:none; border:none; font-size:22px; color:var(--text-soft); cursor:pointer;}
-  .modal-body{padding:14px 16px; overflow-y:auto;}
+  
+  /* AJUSTE DE ESPAÇAMENTO PARA NÃO CORTAR ABAIXO DA TELA */
+  .modal-body{
+    padding:14px 16px calc(24px + env(safe-area-inset-bottom, 0px)); 
+    overflow-y:auto;
+  }
+  
   .chips{display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; margin-bottom:8px;}
   .chip{
     flex:none; padding:8px 13px; border-radius:20px; background:var(--green-light); color:var(--green);
@@ -217,7 +223,7 @@
   .center-form input{width:100%;}
 
   .toast{
-    position:fixed; left:50%; transform:translateX(-50%); bottom:96px; z-index:200;
+    position:fixed; left:50%; transform:translateX(-50%); bottom:calc(86px + env(safe-area-inset-bottom, 0px)); z-index:200;
     background:#233A32; color:#fff; padding:9px 16px; border-radius:24px; font-size:13px; font-weight:700;
     opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; max-width:88%; text-align:center;
   }
@@ -628,7 +634,6 @@
 
     el.innerHTML = groups.map(function(g){
       var cards = g.items.map(function(h){
-        // Agrupa os itens por Categoria para formatar "Categoria - 1x Item1, 2x Item2"
         var catMap = {};
         (h.items || []).forEach(function(it){
           var catName = it.categoryName || 'Outros';
@@ -708,62 +713,61 @@
     if(!b) return;
     var act = b.dataset.act;
     var catId = b.dataset.cat;
-    var cat = state.categories.find(function(c){ return c.id === catId; });
-    if(!cat) return;
 
     if(act === "togglecat"){
       state.openCatId = state.openCatId === catId ? null : catId;
       renderCategories();
     } else if(act === "rmcat"){
-      if(confirm('Excluir a categoria "'+cat.name+'" e todos os seus itens?')){
-        try{ await deleteDoc(doc(db,"categorias",catId)); }
-        catch(err){ toast("Erro ao excluir categoria", true); }
+      var cat = state.categories.find(function(c){ return c.id === catId; });
+      if(cat && confirm('Excluir a categoria "'+cat.name+'"?')){
+        try{ await deleteDoc(doc(db,"categorias",catId)); toast("Categoria excluída"); }
+        catch(err){ toast("Erro ao excluir", true); }
       }
+    } else if(act === "rmprod"){
+      var prodId = b.dataset.prod;
+      var cat = state.categories.find(function(c){ return c.id === catId; });
+      if(!cat) return;
+      var items = cat.items.filter(function(p){ return p.id !== prodId; });
+      try{ await updateDoc(doc(db,"categorias",catId), {items: items}); }
+      catch(err){ toast("Erro ao remover item", true); }
     } else if(act === "addprod"){
       var nameInp = document.getElementById("newname-" + catId);
       var priceInp = document.getElementById("newprice-" + catId);
-      var pName = nameInp.value.trim();
-      var pPrice = parseFloat(priceInp.value);
-      if(!pName || isNaN(pPrice)){ toast("Informe nome e preço do item"); return; }
-      var items = (cat.items || []).slice();
-      items.push({ id: uid(), name: pName, price: pPrice });
+      var name = nameInp.value.trim();
+      var price = parseFloat(priceInp.value);
+      if(!name || isNaN(price)){ toast("Preencha nome e preço do item"); return; }
+      var cat = state.categories.find(function(c){ return c.id === catId; });
+      if(!cat) return;
+      var items = (cat.items || []).concat([{id: uid(), name: name, price: price}]);
       try{
-        await updateDoc(doc(db,"categorias",catId), { items: items });
+        await updateDoc(doc(db,"categorias",catId), {items: items});
         nameInp.value = ""; priceInp.value = "";
         toast("Item adicionado");
-      }catch(err){ toast("Erro ao adicionar produto", true); }
-    } else if(act === "rmprod"){
-      var prodId = b.dataset.prod;
-      var items = (cat.items || []).filter(function(p){ return p.id !== prodId; });
-      try{ await updateDoc(doc(db,"categorias",catId), { items: items }); }
-      catch(err){ toast("Erro ao remover produto", true); }
+      }catch(err){ toast("Erro ao salvar item", true); }
     }
   });
 
   document.getElementById("catList").addEventListener("change", async function(e){
-    var inp = e.target;
-    var catId = inp.dataset.cat;
-    if(inp.dataset.field === "catname"){
-      var newName = inp.value.trim();
-      if(!newName) return;
-      try{ await updateDoc(doc(db,"categorias",catId), { name: newName }); }
-      catch(err){ toast("Erro ao atualizar categoria", true); }
-      return;
-    }
+    var input = e.target;
+    var field = input.dataset.field;
+    if(!field) return;
 
-    var row = inp.closest(".prod-row");
-    if(row && row.dataset.prod){
+    if(field === "catname"){
+      var catId = input.dataset.cat;
+      var val = input.value.trim();
+      if(val) try{ await updateDoc(doc(db,"categorias",catId), {name: val}); }catch(err){}
+    } else if(field === "name" || field === "price"){
+      var row = input.closest(".prod-row");
+      var catId = row.dataset.cat;
       var prodId = row.dataset.prod;
-      var cId = row.dataset.cat;
-      var category = state.categories.find(function(c){ return c.id === cId; });
-      if(!category) return;
-      var items = (category.items || []).slice();
-      var pIdx = items.findIndex(function(p){ return p.id === prodId; });
-      if(pIdx > -1){
-        if(inp.dataset.field === "name") items[pIdx].name = inp.value.trim();
-        if(inp.dataset.field === "price") items[pIdx].price = parseFloat(inp.value)||0;
-        try{ await updateDoc(doc(db,"categorias",cId), { items: items }); }
-        catch(err){ toast("Erro ao atualizar item", true); }
+      var cat = state.categories.find(function(c){ return c.id === catId; });
+      if(!cat) return;
+      var items = cat.items.slice();
+      var idx = items.findIndex(function(p){ return p.id === prodId; });
+      if(idx > -1){
+        if(field === "name") items[idx].name = input.value.trim();
+        if(field === "price") items[idx].price = parseFloat(input.value) || 0;
+        try{ await updateDoc(doc(db,"categorias",catId), {items: items}); }catch(err){}
       }
     }
   });
@@ -772,11 +776,11 @@
     var box = document.getElementById("modalBox");
     box.innerHTML = '<div class="modal-head"><h3>Nova categoria</h3><button class="modal-close" data-close>✕</button></div>'
       + '<div class="modal-body"><div class="center-form">'
-        + '<label>Nome da Categoria</label>'
-        + '<input type="text" id="newCatName" placeholder="Ex: Açaí, Picolés...">'
+        + '<label>Nome da categoria</label>'
+        + '<input type="text" id="newCatName" placeholder="Ex: Sobremesas...">'
         + '<label>Emoji</label>'
         + '<input type="text" id="newCatEmoji" value="🍨" style="width:70px; text-align:center;">'
-        + '<button class="btn btn-green btn-block" style="margin-top:16px;" id="confirmNewCat">Criar Categoria</button>'
+        + '<button class="btn btn-green btn-block" style="margin-top:16px;" id="confirmNewCat">Criar categoria</button>'
       + '</div></div>';
     showModal();
     document.getElementById("confirmNewCat").addEventListener("click", async function(){
@@ -792,58 +796,67 @@
   });
 
   // ---------- REPORTS ----------
-  function renderReports(){
-    var el = document.getElementById("repContent");
-    var period = document.getElementById("repPeriod").value;
-    var now = new Date();
-    var startTime = 0;
-
-    if(period === "today"){
-      startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-    } else if(period === "yesterday"){
-      startTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()-1).getTime();
-    } else if(period === "7days"){
-      startTime = Date.now() - 7*24*60*60*1000;
-    } else if(period === "month"){
-      startTime = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
-    } else if(period === "custom"){
-      var s = document.getElementById("repStart").value;
-      if(s) startTime = new Date(s).getTime();
-    }
-
-    var filtered = state.history.filter(function(h){ return h.closedAt >= startTime; });
-    var totalRev = filtered.reduce(function(s,h){ return s + h.total; }, 0);
-    var totalOrders = filtered.length;
-
-    var itemCounts = {};
-    filtered.forEach(function(h){
-      (h.items||[]).forEach(function(it){
-        var key = it.name;
-        itemCounts[key] = (itemCounts[key] || 0) + it.qty;
-      });
-    });
-
-    var sortedItems = Object.keys(itemCounts).map(function(k){ return { name:k, qty:itemCounts[k] }; })
-                                           .sort(function(a,b){ return b.qty - a.qty; });
-
-    var topItemsHtml = sortedItems.map(function(it){
-      return '<div class="top-item-row"><span>'+escapeHtml(it.name)+'</span><strong>'+it.qty+' un.</strong></div>';
-    }).join("") || '<div style="font-size:13px; color:var(--text-soft); padding:8px 0;">Nenhum item vendido no período.</div>';
-
-    el.innerHTML = '<div class="rep-grid">'
-      + '<div class="rep-card-stat"><div class="title">FATURAMENTO</div><div class="val">'+money(totalRev)+'</div></div>'
-      + '<div class="rep-card-stat"><div class="title">PEDIDOS</div><div class="val" style="color:var(--brown);">'+totalOrders+'</div></div>'
-    + '</div>'
-    + '<div class="card"><h3>Mais Vendidos</h3><div style="margin-top:10px;">'+topItemsHtml+'</div></div>';
-  }
-
   document.getElementById("repPeriod").addEventListener("change", function(){
-    document.getElementById("customDates").style.display = this.value === "custom" ? "flex" : "none";
+    var custom = this.value === "custom";
+    document.getElementById("customDates").style.display = custom ? "flex" : "none";
     renderReports();
   });
   document.getElementById("repStart").addEventListener("change", renderReports);
   document.getElementById("repEnd").addEventListener("change", renderReports);
 
+  function renderReports(){
+    var p = document.getElementById("repPeriod").value;
+    var now = new Date();
+    var start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+
+    if(p === "yesterday"){
+      start.setDate(start.getDate()-1);
+      end.setDate(end.getDate()-1);
+    } else if(p === "7days"){
+      start.setDate(start.getDate()-6);
+    } else if(p === "month"){
+      start = new Date(now.getFullYear(), now.getMonth(), 1);
+    } else if(p === "custom"){
+      var sVal = document.getElementById("repStart").value;
+      var eVal = document.getElementById("repEnd").value;
+      if(sVal) start = new Date(sVal + "T00:00:00");
+      if(eVal) end = new Date(eVal + "T23:59:59");
+    }
+
+    var filtered = state.history.filter(function(h){
+      var t = new Date(h.closedAt).getTime();
+      return t >= start.getTime() && t <= end.getTime();
+    });
+
+    var totalRev = filtered.reduce(function(s,h){ return s + h.total; }, 0);
+    var totalOrders = filtered.length;
+    var itemSales = {};
+
+    filtered.forEach(function(h){
+      (h.items || []).forEach(function(it){
+        var key = it.name;
+        if(!itemSales[key]) itemSales[key] = { qty:0, rev:0 };
+        itemSales[key].qty += it.qty;
+        itemSales[key].rev += (it.price * it.qty);
+      });
+    });
+
+    var sortedItems = Object.keys(itemSales).map(function(k){
+      return { name:k, qty:itemSales[k].qty, rev:itemSales[k].rev };
+    }).sort(function(a,b){ return b.qty - a.qty; });
+
+    var topHtml = sortedItems.length ? sortedItems.map(function(it){
+      return '<div class="top-item-row"><div><b>'+escapeHtml(it.name)+'</b><br><small style="color:var(--text-soft);">'+it.qty+' vendidos</small></div><div style="font-weight:800; color:var(--green);">'+money(it.rev)+'</div></div>';
+    }).join("") : '<div style="font-size:13px; color:var(--text-soft); padding:8px 0;">Nenhuma venda no período.</div>';
+
+    document.getElementById("repContent").innerHTML = '<div class="rep-grid">'
+      + '<div class="rep-card-stat"><div class="title">Faturamento</div><div class="val">'+money(totalRev)+'</div></div>'
+      + '<div class="rep-card-stat"><div class="title">Atendimentos</div><div class="val">'+totalOrders+'</div></div>'
+    + '</div>'
+    + '<div class="card"><h3>Mais Vendidos</h3><div style="margin-top:10px;">'+topHtml+'</div></div>';
+  }
 </script>
+
 </body>
 </html>
