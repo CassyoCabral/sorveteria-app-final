@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Sorveteira - Pedidos</title>
+  <title>Sorveteria - Pedidos</title>
   <style>
     :root {
-      /* Paleta extraída da imagem */
-      --color-sky-turquoise: #2EC4B6;
-      --color-icecream-pink: #E889AC;
+      /* Paleta inspirada na logo */
+      --color-sky-turquoise: #2EC4B6; /* Céu */
+      --color-icecream-pink: #E889AC; /* Sorvete */
       --color-sky-light: #A2E8DD;
-      --color-pink-dark: #C85280;
       
-      --bg-dark: #1E1E1E;
-      --bg-card: #322A26;
+      --bg-dark: #121212;
+      --bg-card: #1E1E1E;
       --bg-modal: #FFFFFF;
       --text-dark: #2B3A3A;
-      --text-muted: #666666;
+      --text-muted: #777777;
     }
 
     * {
@@ -29,107 +28,166 @@
     body {
       background-color: var(--bg-dark);
       color: #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Cabeçalho com cor do Céu */
-    .header {
-      background-color: var(--color-sky-turquoise);
+    /* Topbar */
+    .topbar {
+      background-color: #1A1A1A;
       padding: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: calc(16px + env(safe-area-inset-top));
+      padding-top: calc(12px + env(safe-area-inset-top));
     }
 
-    .header h1 {
+    .topbar h1 {
       font-size: 1.2rem;
+      font-weight: 700;
     }
 
-    /* Sub-header banner */
+    /* Banner Principal */
     .banner {
-      background-color: var(--bg-card);
-      padding: 16px;
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
+      background: linear-gradient(180deg, #3D2B22 0%, #1A1817 100%);
+      padding: 20px 16px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
     }
 
-    .banner h2 {
-      font-size: 1.1rem;
+    .banner-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.2rem;
+      font-weight: 700;
       color: #FFFFFF;
     }
 
-    .banner p {
-      font-size: 0.8rem;
+    .banner-subtitle {
+      font-size: 0.85rem;
       color: var(--color-sky-light);
-      margin-top: 4px;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* Card do Pedido */
+    .dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--color-sky-turquoise);
+      border-radius: 50%;
+    }
+
+    /* Card de Pedido Ativo */
     .order-card {
-      background-color: #2C2C2C;
-      margin: 16px;
+      background-color: var(--bg-card);
+      margin: 20px 16px;
       padding: 16px;
-      border-radius: 12px;
+      border-radius: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      cursor: pointer;
+      border: 1px solid #2A2A2A;
     }
 
-    /* Modal / Bottom Sheet Corrigido */
+    .order-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .order-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .order-price {
+      color: var(--color-sky-turquoise);
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Modal / Bottom Sheet */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
+      background: rgba(0, 0, 0, 0.6);
+      display: none; /* Oculto por padrão para não travar a tela */
       justify-content: flex-end;
       flex-direction: column;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
     }
 
     .modal-content {
       background-color: var(--bg-modal);
       color: var(--text-dark);
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
       padding: 20px 16px;
-      max-height: 70vh;
+      max-height: 75vh;
       display: flex;
       flex-direction: column;
 
-      /* CORREÇÃO DA SOBREPOSIÇÃO ABAIXO DO BOTÃO DE VOLTAR */
-      padding-bottom: calc(24px + env(safe-area-inset-bottom));
+      /* Ajuste de espaço para não cortar na navegação/botão voltar */
+      padding-bottom: calc(28px + env(safe-area-inset-bottom));
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
     .modal-header h3 {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--text-dark);
+      font-weight: 700;
     }
 
-    /* Categorias com as novas cores */
+    .close-btn {
+      font-size: 1.4rem;
+      color: #666;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    /* Carrossel de Categorias */
     .categories {
       display: flex;
       gap: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       overflow-x: auto;
+      padding-bottom: 4px;
     }
 
     .category-btn {
       border: none;
-      padding: 8px 16px;
+      padding: 10px 18px;
       border-radius: 20px;
       font-weight: 600;
+      font-size: 0.9rem;
       cursor: pointer;
-      background-color: #E8F7F5;
+      background-color: #EBF8F6;
       color: var(--color-sky-turquoise);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .category-btn.active {
@@ -137,12 +195,7 @@
       color: #FFFFFF;
     }
 
-    .category-btn.pink-active {
-      background-color: var(--color-icecream-pink);
-      color: #FFFFFF;
-    }
-
-    /* Lista de Itens Rolável */
+    /* Lista de Itens */
     .item-list {
       overflow-y: auto;
       flex: 1;
@@ -151,61 +204,95 @@
     .item-row {
       display: flex;
       justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid #EEEEEE;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #F0F0F0;
+    }
+
+    .item-name {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-dark);
     }
 
     .item-price {
       color: var(--color-sky-turquoise);
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
+  <!-- Barra Superior -->
+  <div class="topbar">
     <h1>Sorveteria</h1>
   </div>
 
+  <!-- Banner -->
   <div class="banner">
-    <h2>🍨 Sorveteria — Pedidos</h2>
-    <p>• Sincronizado em tempo real entre os dispositivos</p>
-  </div>
-
-  <div class="order-card">
-    <div>
-      <strong>Cassyo2</strong>
-      <div style="font-size: 0.8rem; color: #AAA;">0 item(ns)</div>
+    <div class="banner-title">
+      🍦 Sorveteria — Pedidos
     </div>
-    <div style="color: var(--color-sky-turquoise); font-weight: bold;">R$ 0,00 ▾</div>
+    <div class="banner-subtitle">
+      <span class="dot"></span> Sincronizado em tempo real entre os dispositivos
+    </div>
   </div>
 
-  <!-- Modal Bottom Sheet -->
-  <div class="modal-overlay">
+  <!-- Card do Cliente/Pedido (Clique para abrir) -->
+  <div class="order-card" onclick="openModal()">
+    <div>
+      <div class="order-name">Cassyo2</div>
+      <div class="order-count">0 item(ns)</div>
+    </div>
+    <div class="order-price">
+      R$ 0,00 ▾
+    </div>
+  </div>
+
+  <!-- Bottom Sheet / Modal Interativo -->
+  <div id="modalOverlay" class="modal-overlay" onclick="closeModalOnBackdrop(event)">
     <div class="modal-content">
       <div class="modal-header">
         <h3>Adicionar item — Cassyo2</h3>
-        <span style="cursor: pointer; font-size: 1.2rem;">✕</span>
+        <span class="close-btn" onclick="closeModal()">✕</span>
       </div>
 
       <div class="categories">
-        <button class="category-btn">🍧 Massas</button>
+        <button class="category-btn">🍨 Massas</button>
         <button class="category-btn active">🥣 Potes</button>
         <button class="category-btn">🍉 Picolés de fruta</button>
       </div>
 
       <div class="item-list">
         <div class="item-row">
-          <span>Tradicional</span>
+          <span class="item-name">Tradicional</span>
           <span class="item-price">R$ 25,00</span>
         </div>
         <div class="item-row">
-          <span>Gourmet</span>
+          <span class="item-name">Gourmet</span>
           <span class="item-price">R$ 35,00</span>
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    // Fecha o modal ao clicar fora do cartão
+    function closeModalOnBackdrop(event) {
+      if (event.target.id === 'modalOverlay') {
+        closeModal();
+      }
+    }
+  </script>
 
 </body>
 </html>
