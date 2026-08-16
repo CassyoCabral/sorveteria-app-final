@@ -4122,21 +4122,6 @@ function openCheckout(orderId){
     return;
 
 
-  if(
-    !order.items
-    ||
-    !order.items.length
-  ){
-
-    toast(
-      "Adicione pelo menos um item antes de fechar"
-    );
-
-    return;
-
-  }
-
-
   let discount =
     Number(
       order.discount
