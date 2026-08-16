@@ -23,6 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
   --bg:#F9F7F8;
   --surface:#FFFFFF;
@@ -51,7 +52,8 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
   margin:0;
   padding:0;
 }
@@ -64,13 +66,18 @@ body{
   padding-bottom:100px;
 }
 
-h1,h2,h3,.display{
+h1,
+h2,
+h3,
+.display{
   font-family:'Fredoka',sans-serif;
   font-weight:600;
   margin:0;
 }
 
-button,input,select{
+button,
+input,
+select{
   font-family:'Nunito',sans-serif;
 }
 
@@ -85,7 +92,10 @@ button{
   padding:0 16px;
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 header{
   background:linear-gradient(
@@ -95,9 +105,12 @@ header{
   );
 
   color:var(--pink-text);
+
   padding:22px 16px 34px;
+
   position:relative;
   overflow:hidden;
+
   text-align:center;
 }
 
@@ -155,7 +168,10 @@ header .sub{
   z-index:1;
 }
 
-/* NAV */
+
+/* =========================================================
+   NAV
+========================================================= */
 
 nav.tabs{
   position:fixed;
@@ -167,6 +183,7 @@ nav.tabs{
   border-top:1px solid var(--border);
 
   display:flex;
+
   z-index:50;
 
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -174,6 +191,7 @@ nav.tabs{
 
 nav.tabs button{
   flex:1;
+
   border:none;
   background:none;
 
@@ -187,6 +205,7 @@ nav.tabs button{
   display:flex;
   flex-direction:column;
   align-items:center;
+
   gap:3px;
 
   cursor:pointer;
@@ -200,7 +219,10 @@ nav.tabs button.active{
   color:var(--green);
 }
 
-/* VIEWS */
+
+/* =========================================================
+   VIEWS
+========================================================= */
 
 .view{
   display:none;
@@ -211,21 +233,29 @@ nav.tabs button.active{
   display:block;
 }
 
-/* CARDS */
+
+/* =========================================================
+   CARDS
+========================================================= */
 
 .card{
   background:var(--surface);
+
   border-radius:var(--radius);
+
   box-shadow:var(--shadow);
 
   padding:14px;
+
   margin-bottom:12px;
 }
 
 .order-card .top{
   display:flex;
+
   justify-content:space-between;
   align-items:flex-start;
+
   cursor:pointer;
 }
 
@@ -250,8 +280,11 @@ nav.tabs button.active{
 
 .order-card .items{
   margin-top:10px;
+
   border-top:1px dashed var(--border);
+
   padding-top:10px;
+
   display:none;
 }
 
@@ -267,33 +300,46 @@ nav.tabs button.active{
   transform:rotate(180deg);
 }
 
-/* STATUS */
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .order-status{
   display:inline-flex;
+
   align-items:center;
+
   gap:5px;
 
   font-size:10px;
   font-weight:800;
 
   padding:4px 7px;
+
   border-radius:20px;
 
   margin-top:5px;
 
   background:var(--green-light);
+
   color:var(--green);
 }
 
-/* ITEMS */
+
+/* =========================================================
+   ITEMS
+========================================================= */
 
 .item-row{
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
 
   padding:7px 0;
+
   font-size:14px;
 }
 
@@ -304,14 +350,19 @@ nav.tabs button.active{
 
 .item-row .iname small{
   display:block;
+
   color:var(--text-soft);
+
   font-size:11.5px;
 }
 
 .qty-ctrl{
   display:flex;
+
   align-items:center;
+
   gap:8px;
+
   margin:0 10px;
 }
 
@@ -320,54 +371,74 @@ nav.tabs button.active{
   height:24px;
 
   border-radius:50%;
+
   border:1px solid var(--border);
 
   background:#fff;
 
   font-size:15px;
+
   font-weight:800;
+
   color:var(--text);
 
   cursor:pointer;
+
   line-height:1;
 }
 
 .iprice{
   width:64px;
+
   text-align:right;
+
   font-weight:700;
 }
 
 .irm{
   background:none;
+
   border:none;
+
   color:var(--danger);
+
   font-size:16px;
+
   cursor:pointer;
+
   padding:2px 4px;
 }
 
-/* BUTTONS */
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 .row-btns{
   display:flex;
+
   gap:8px;
+
   margin-top:12px;
 }
 
 .btn{
   border:none;
+
   border-radius:12px;
 
   padding:10px 14px;
 
   font-weight:800;
+
   font-size:13.5px;
 
   cursor:pointer;
 
   display:inline-flex;
+
   align-items:center;
+
   justify-content:center;
 
   gap:6px;
@@ -390,12 +461,15 @@ nav.tabs button.active{
 .btn-outline{
   background:#fff;
   color:var(--text);
+
   border:1.5px solid var(--border);
 }
 
 .btn-danger-outline{
   background:#fff;
+
   color:var(--danger);
+
   border:1.5px solid #F4CFCF;
 }
 
@@ -408,28 +482,39 @@ nav.tabs button.active{
   width:100%;
 }
 
-/* FAB */
+
+/* =========================================================
+   FAB
+========================================================= */
 
 .btn-fab{
   position:fixed;
 
   right:18px;
-  bottom:calc(76px + env(safe-area-inset-bottom,0px));
+
+  bottom:calc(
+    76px +
+    env(safe-area-inset-bottom,0px)
+  );
 
   z-index:40;
 
   background:var(--green);
+
   color:#fff;
 
   border:none;
+
   border-radius:50%;
 
   width:56px;
   height:56px;
 
-  box-shadow:0 6px 16px rgba(42,157,143,.4);
+  box-shadow:
+    0 6px 16px rgba(42,157,143,.4);
 
   font-size:26px;
+
   cursor:pointer;
 }
 
@@ -437,7 +522,10 @@ nav.tabs button.active{
   opacity:.5;
 }
 
-/* SEARCH */
+
+/* =========================================================
+   SEARCH
+========================================================= */
 
 .search-box{
   position:relative;
@@ -446,30 +534,42 @@ nav.tabs button.active{
 
 .search-box input{
   width:100%;
+
   padding:12px 14px 12px 40px;
 
   border:1.5px solid var(--border);
+
   border-radius:12px;
 
   background:#fff;
 
   font-size:14px;
+
   font-weight:700;
 }
 
 .search-box span{
   position:absolute;
+
   left:13px;
+
   top:50%;
+
   transform:translateY(-50%);
+
   font-size:17px;
+
   color:var(--text-soft);
 }
 
-/* EMPTY */
+
+/* =========================================================
+   EMPTY
+========================================================= */
 
 .empty{
   text-align:center;
+
   color:var(--text-soft);
 
   padding:40px 20px;
@@ -479,16 +579,24 @@ nav.tabs button.active{
 
 .empty .ic{
   font-size:38px;
+
   display:block;
+
   margin-bottom:8px;
 }
 
-/* CATEGORY */
+
+/* =========================================================
+   CATEGORY
+========================================================= */
 
 .cat-card .head{
   display:flex;
+
   align-items:center;
+
   gap:10px;
+
   cursor:pointer;
 }
 
@@ -499,10 +607,13 @@ nav.tabs button.active{
   border-radius:50%;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 
   font-size:17px;
+
   flex:none;
 }
 
@@ -512,17 +623,21 @@ nav.tabs button.active{
 
 .cat-card .head .cname{
   font-family:'Fredoka';
+
   font-size:16px;
+
   font-weight:600;
 }
 
 .cat-card .head .ccount{
   font-size:12px;
+
   color:var(--text-soft);
 }
 
 .cat-body{
   display:none;
+
   margin-top:12px;
 }
 
@@ -530,11 +645,16 @@ nav.tabs button.active{
   display:block;
 }
 
-/* PRODUCTS */
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
 
 .prod-row{
   display:flex;
+
   align-items:center;
+
   gap:8px;
 
   padding:8px 0;
@@ -548,11 +668,13 @@ nav.tabs button.active{
 
 .prod-row input[type=text]{
   flex:1;
+
   min-width:0;
 }
 
 .prod-row input[type=number]{
   width:85px;
+
   flex:none;
 }
 
@@ -562,6 +684,7 @@ nav.tabs button.active{
 
 .product-status{
   font-size:10px;
+
   font-weight:800;
 
   padding:3px 6px;
@@ -569,6 +692,7 @@ nav.tabs button.active{
   border-radius:12px;
 
   background:#F3F4F6;
+
   color:var(--text-soft);
 
   white-space:nowrap;
@@ -576,6 +700,7 @@ nav.tabs button.active{
 
 .product-status.on{
   background:var(--green-light);
+
   color:var(--green);
 }
 
@@ -584,20 +709,24 @@ input[type=number],
 input[type=date],
 select{
   border:1.5px solid var(--border);
+
   border-radius:9px;
 
   padding:8px 9px;
 
   font-weight:700;
+
   font-size:13.5px;
 
   color:var(--text);
+
   background:#FBFEFC;
 }
 
 input:focus,
 select:focus{
   outline:none;
+
   border-color:var(--green);
 }
 
@@ -607,22 +736,27 @@ input[type=checkbox]{
 
 .add-prod-row{
   display:flex;
+
   gap:6px;
+
   margin-top:10px;
 }
 
 .add-prod-row input[type=text]{
   flex:1.6;
+
   min-width:0;
 }
 
 .add-prod-row input[type=number]{
   flex:1;
+
   min-width:0;
 }
 
 .icon-btn{
   background:none;
+
   border:none;
 
   cursor:pointer;
@@ -630,6 +764,7 @@ input[type=checkbox]{
   padding:4px;
 
   color:var(--text-soft);
+
   font-size:15px;
 }
 
@@ -641,10 +776,14 @@ input[type=checkbox]{
   opacity:.4;
 }
 
-/* MODAL */
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal-bg{
   position:fixed;
+
   inset:0;
 
   background:rgba(20,30,26,.45);
@@ -654,6 +793,7 @@ input[type=checkbox]{
   display:none;
 
   align-items:flex-end;
+
   justify-content:center;
 }
 
@@ -665,15 +805,19 @@ input[type=checkbox]{
   background:var(--surface);
 
   width:100%;
+
   max-width:560px;
 
   border-radius:24px 24px 0 0;
 
   height:50vh;
+
   min-height:25vh;
+
   max-height:92vh;
 
   display:flex;
+
   flex-direction:column;
 
   animation:slideup .2s cubic-bezier(.1,.9,.2,1);
@@ -687,18 +831,23 @@ input[type=checkbox]{
 
 .drag-handle-area{
   width:100%;
+
   padding:10px 0 6px;
 
   display:flex;
+
   justify-content:center;
+
   align-items:center;
 
   cursor:ns-resize;
+
   touch-action:none;
 }
 
 .drag-handle-bar{
   width:42px;
+
   height:5px;
 
   background:#D1D5DB;
@@ -707,21 +856,26 @@ input[type=checkbox]{
 }
 
 @keyframes slideup{
+
   from{
     transform:translateY(100%);
     opacity:0;
   }
+
   to{
     transform:translateY(0);
     opacity:1;
   }
+
 }
 
 .modal-head{
   padding:4px 16px 10px;
 
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
 
   border-bottom:1px solid var(--border);
@@ -733,6 +887,7 @@ input[type=checkbox]{
 
 .modal-close{
   background:none;
+
   border:none;
 
   font-size:22px;
@@ -743,24 +898,34 @@ input[type=checkbox]{
 }
 
 .modal-body{
-  padding:14px 16px calc(24px + env(safe-area-inset-bottom,0px));
+  padding:
+    14px
+    16px
+    calc(24px + env(safe-area-inset-bottom,0px));
 
   overflow-y:auto;
 
   flex:1;
 
   touch-action:pan-y;
+
+  scroll-behavior:auto;
 }
 
-/* PICKER */
+
+/* =========================================================
+   PICKER
+========================================================= */
 
 .chips{
   display:flex;
+
   gap:8px;
 
   overflow-x:auto;
 
   padding-bottom:10px;
+
   margin-bottom:8px;
 }
 
@@ -772,9 +937,11 @@ input[type=checkbox]{
   border-radius:20px;
 
   background:var(--green-light);
+
   color:var(--green);
 
   font-weight:800;
+
   font-size:12.5px;
 
   cursor:pointer;
@@ -786,42 +953,102 @@ input[type=checkbox]{
 
 .chip.active{
   background:var(--green);
+
   color:#fff;
 }
 
+
+/*
+=========================================================
+ NOVO VISUAL DOS PRODUTOS
+
+ 2 COLUNAS
+ QUADRADOS
+ LISTA VERTICAL
+=========================================================
+*/
+
+#pickItemsList{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:10px;
+
+  padding:4px 0 20px;
+}
+
 .pick-item{
+  min-height:92px;
+
   display:flex;
-  justify-content:space-between;
+
+  flex-direction:column;
+
   align-items:center;
 
-  padding:12px 4px;
+  justify-content:center;
 
-  border-bottom:1px solid var(--border);
+  text-align:center;
+
+  padding:12px 8px;
+
+  border:1.5px solid var(--border);
+
+  border-radius:14px;
+
+  background:#fff;
+
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
 
   cursor:pointer;
+
+  transition:
+    transform .08s,
+    background .08s,
+    border-color .08s;
 }
 
 .pick-item:active{
   background:var(--green-light);
+
+  border-color:var(--green);
+
+  transform:scale(.97);
 }
 
 .pick-item.disabled{
   opacity:.45;
+
   cursor:not-allowed;
 }
 
 .pick-item .pn{
-  font-weight:700;
-  font-size:14.5px;
+  font-weight:800;
+
+  font-size:14px;
+
+  line-height:1.25;
+
+  width:100%;
+
+  word-break:break-word;
 }
 
 .pick-item .pp{
   color:var(--green);
+
   font-weight:800;
+
   font-size:14px;
+
+  margin-top:6px;
 }
 
-/* FORMS */
+
+/* =========================================================
+   FORMS
+========================================================= */
 
 .center-form{
   padding:6px 0;
@@ -829,6 +1056,7 @@ input[type=checkbox]{
 
 .center-form label{
   font-size:12.5px;
+
   font-weight:800;
 
   color:var(--text-soft);
@@ -843,7 +1071,10 @@ input[type=checkbox]{
   width:100%;
 }
 
-/* CHECKOUT */
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
 
 .checkout-total{
   background:var(--green-light);
@@ -857,6 +1088,7 @@ input[type=checkbox]{
 
 .checkout-line{
   display:flex;
+
   justify-content:space-between;
 
   padding:5px 0;
@@ -868,9 +1100,11 @@ input[type=checkbox]{
   border-top:1px dashed #A9D8D2;
 
   margin-top:7px;
+
   padding-top:10px;
 
   display:flex;
+
   justify-content:space-between;
 
   font-family:'Fredoka';
@@ -882,7 +1116,9 @@ input[type=checkbox]{
 
 .payment-grid{
   display:grid;
+
   grid-template-columns:1fr 1fr;
+
   gap:8px;
 }
 
@@ -890,21 +1126,28 @@ input[type=checkbox]{
   padding:11px 8px;
 
   border:1.5px solid var(--border);
+
   border-radius:12px;
 
   background:#fff;
 
   font-weight:800;
+
   cursor:pointer;
 }
 
 .payment-btn.active{
   border-color:var(--green);
+
   background:var(--green-light);
+
   color:var(--green);
 }
 
-/* TOAST */
+
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast{
   position:fixed;
@@ -913,11 +1156,15 @@ input[type=checkbox]{
 
   transform:translateX(-50%);
 
-  bottom:calc(86px + env(safe-area-inset-bottom,0px));
+  bottom:calc(
+    86px +
+    env(safe-area-inset-bottom,0px)
+  );
 
   z-index:200;
 
   background:#2D3142;
+
   color:#fff;
 
   padding:9px 16px;
@@ -925,12 +1172,16 @@ input[type=checkbox]{
   border-radius:24px;
 
   font-size:13px;
+
   font-weight:700;
 
   opacity:0;
+
   pointer-events:none;
 
-  transition:opacity .2s,transform .2s;
+  transition:
+    opacity .2s,
+    transform .2s;
 
   max-width:88%;
 
@@ -940,14 +1191,19 @@ input[type=checkbox]{
 .toast.show{
   opacity:1;
 
-  transform:translateX(-50%) translateY(-6px);
+  transform:
+    translateX(-50%)
+    translateY(-6px);
 }
 
 .toast.err{
   background:var(--danger);
 }
 
-/* LOADING */
+
+/* =========================================================
+   LOADING
+========================================================= */
 
 .loading{
   text-align:center;
@@ -959,10 +1215,18 @@ input[type=checkbox]{
   font-weight:700;
 }
 
-/* HISTORY */
+
+/* =========================================================
+   HISTORY
+========================================================= */
 
 .hist-summary{
-  background:linear-gradient(135deg,var(--green),#3A867F);
+  background:
+    linear-gradient(
+      135deg,
+      var(--green),
+      #3A867F
+    );
 
   color:#fff;
 
@@ -973,18 +1237,23 @@ input[type=checkbox]{
   margin-bottom:14px;
 
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
 }
 
 .hist-summary .lbl{
   font-size:12px;
+
   font-weight:800;
+
   opacity:.9;
 }
 
 .hist-summary .val{
   font-family:'Fredoka';
+
   font-size:20px;
 }
 
@@ -992,6 +1261,7 @@ input[type=checkbox]{
   font-family:'Fredoka';
 
   font-weight:600;
+
   font-size:13px;
 
   color:var(--text-soft);
@@ -999,6 +1269,7 @@ input[type=checkbox]{
   margin:14px 2px 8px;
 
   text-transform:uppercase;
+
   letter-spacing:.4px;
 }
 
@@ -1016,24 +1287,31 @@ input[type=checkbox]{
 
 .hist-card .top{
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
 }
 
 .hist-card .name{
   font-family:'Fredoka';
+
   font-size:15.5px;
 }
 
 .hist-card .time{
   font-size:11.5px;
+
   color:var(--text-soft);
+
   margin-top:1px;
 }
 
 .hist-card .total{
   font-family:'Fredoka';
+
   font-size:15.5px;
+
   color:var(--green);
 }
 
@@ -1049,12 +1327,16 @@ input[type=checkbox]{
 
 .hist-card .hist-actions{
   display:flex;
+
   justify-content:flex-end;
 
   margin-top:4px;
 }
 
-/* REPORTS */
+
+/* =========================================================
+   REPORTS
+========================================================= */
 
 .rep-grid{
   display:grid;
@@ -1106,7 +1388,10 @@ input[type=checkbox]{
   font-size:13.5px;
 }
 
-/* OFFLINE */
+
+/* =========================================================
+   OFFLINE
+========================================================= */
 
 .offline-banner{
   display:none;
@@ -1128,7 +1413,10 @@ input[type=checkbox]{
   display:block;
 }
 
-/* INSTALL */
+
+/* =========================================================
+   INSTALL
+========================================================= */
 
 .install-box{
   background:var(--green-light);
@@ -1146,7 +1434,10 @@ input[type=checkbox]{
   display:block;
 }
 
-/* RESPONSIVE */
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:380px){
 
@@ -1156,6 +1447,7 @@ input[type=checkbox]{
 
   .qty-ctrl{
     margin:0 5px;
+
     gap:5px;
   }
 
@@ -1166,15 +1458,39 @@ input[type=checkbox]{
   .btn{
     padding:9px 10px;
   }
+
+  #pickItemsList{
+    gap:7px;
+  }
+
+  .pick-item{
+    min-height:84px;
+
+    padding:10px 5px;
+  }
+
+  .pick-item .pn{
+    font-size:13px;
+  }
+
+  .pick-item .pp{
+    font-size:13px;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
+
 <div class="offline-banner" id="offlineBanner">
+
   📡 Sem conexão. O aplicativo continuará funcionando e sincronizará quando a internet voltar.
+
 </div>
+
 
 <header>
 
@@ -1183,15 +1499,21 @@ input[type=checkbox]{
     <h1>🍦 Sorveteria Gelo Doce</h1>
 
     <div class="sub">
+
       <span class="dot off" id="statusDot"></span>
-      <span id="headerSub">Conectando ao banco de dados...</span>
+
+      <span id="headerSub">
+        Conectando ao banco de dados...
+      </span>
+
     </div>
 
   </div>
 
-  <svg class="wave"
-       viewBox="0 0 500 30"
-       preserveAspectRatio="none">
+  <svg
+    class="wave"
+    viewBox="0 0 500 30"
+    preserveAspectRatio="none">
 
     <path
       d="M0,15 Q40,30 80,15 T160,15 T240,15 T320,15 T400,15 T480,15 T560,15 V30 H0 Z"
@@ -1202,11 +1524,17 @@ input[type=checkbox]{
 
 </header>
 
+
 <div class="wrap">
 
-  <!-- PEDIDOS -->
 
-  <div class="view active" id="view-pedidos">
+  <!-- =====================================================
+       PEDIDOS
+  ====================================================== -->
+
+  <div
+    class="view active"
+    id="view-pedidos">
 
     <div class="search-box">
 
@@ -1215,20 +1543,28 @@ input[type=checkbox]{
       <input
         type="search"
         id="orderSearch"
-        placeholder="Buscar cliente...">
+        placeholder="Buscar comanda...">
 
     </div>
 
     <div id="ordersList">
-      <div class="loading">Carregando pedidos…</div>
+
+      <div class="loading">
+        Carregando pedidos…
+      </div>
+
     </div>
 
   </div>
 
 
-  <!-- CATEGORIAS -->
+  <!-- =====================================================
+       CATEGORIAS
+  ====================================================== -->
 
-  <div class="view" id="view-categorias">
+  <div
+    class="view"
+    id="view-categorias">
 
     <div class="search-box">
 
@@ -1242,7 +1578,11 @@ input[type=checkbox]{
     </div>
 
     <div id="catList">
-      <div class="loading">Carregando categorias…</div>
+
+      <div class="loading">
+        Carregando categorias…
+      </div>
+
     </div>
 
     <button
@@ -1257,9 +1597,13 @@ input[type=checkbox]{
   </div>
 
 
-  <!-- HISTÓRICO -->
+  <!-- =====================================================
+       HISTÓRICO
+  ====================================================== -->
 
-  <div class="view" id="view-historico">
+  <div
+    class="view"
+    id="view-historico">
 
     <div class="search-box">
 
@@ -1268,29 +1612,42 @@ input[type=checkbox]{
       <input
         type="search"
         id="historySearch"
-        placeholder="Buscar cliente no histórico...">
+        placeholder="Buscar comanda no histórico...">
 
     </div>
 
     <div id="historySummary"></div>
 
     <div id="historyList">
-      <div class="loading">Carregando histórico…</div>
+
+      <div class="loading">
+        Carregando histórico…
+      </div>
+
     </div>
 
   </div>
 
 
-  <!-- RELATÓRIOS -->
+  <!-- =====================================================
+       RELATÓRIOS
+  ====================================================== -->
 
-  <div class="view" id="view-relatorios">
+  <div
+    class="view"
+    id="view-relatorios">
 
-    <div class="install-box" id="installBox">
+    <div
+      class="install-box"
+      id="installBox">
 
       <b>📱 Instale o aplicativo</b>
 
-      <div style="font-size:12px;margin-top:4px;">
+      <div
+        style="font-size:12px;margin-top:4px;">
+
         Adicione o Gelo Doce à tela inicial para usar como aplicativo.
+
       </div>
 
       <button
@@ -1304,10 +1661,15 @@ input[type=checkbox]{
 
     </div>
 
+
     <div class="card">
 
       <label
-        style="font-size:12.5px;font-weight:800;color:var(--text-soft);">
+        style="
+          font-size:12.5px;
+          font-weight:800;
+          color:var(--text-soft);
+        ">
 
         Período do Relatório:
 
@@ -1317,17 +1679,36 @@ input[type=checkbox]{
         id="repPeriod"
         style="width:100%;margin-top:6px;">
 
-        <option value="today">Hoje</option>
-        <option value="yesterday">Ontem</option>
-        <option value="7days">Últimos 7 dias</option>
-        <option value="month">Este Mês</option>
-        <option value="custom">Personalizado</option>
+        <option value="today">
+          Hoje
+        </option>
+
+        <option value="yesterday">
+          Ontem
+        </option>
+
+        <option value="7days">
+          Últimos 7 dias
+        </option>
+
+        <option value="month">
+          Este Mês
+        </option>
+
+        <option value="custom">
+          Personalizado
+        </option>
 
       </select>
 
+
       <div
         id="customDates"
-        style="display:none;gap:8px;margin-top:8px;">
+        style="
+          display:none;
+          gap:8px;
+          margin-top:8px;
+        ">
 
         <input
           type="date"
@@ -1353,7 +1734,7 @@ input[type=checkbox]{
 <button
   class="btn-fab"
   id="fabAdd"
-  title="Novo pedido"
+  title="Nova comanda"
   disabled>
 
   +
@@ -1368,6 +1749,7 @@ input[type=checkbox]{
     data-view="pedidos">
 
     <span class="ic">🧾</span>
+
     Pedidos
 
   </button>
@@ -1376,6 +1758,7 @@ input[type=checkbox]{
     data-view="categorias">
 
     <span class="ic">🍨</span>
+
     Produtos
 
   </button>
@@ -1384,6 +1767,7 @@ input[type=checkbox]{
     data-view="historico">
 
     <span class="ic">📖</span>
+
     Histórico
 
   </button>
@@ -1392,6 +1776,7 @@ input[type=checkbox]{
     data-view="relatorios">
 
     <span class="ic">📊</span>
+
     Relatórios
 
   </button>
@@ -1399,13 +1784,21 @@ input[type=checkbox]{
 </nav>
 
 
-<!-- MODAL -->
+<!-- =======================================================
+     MODAL
+======================================================== -->
 
-<div class="modal-bg" id="modalBg">
+<div
+  class="modal-bg"
+  id="modalBg">
 
-  <div class="modal" id="modalBox">
+  <div
+    class="modal"
+    id="modalBox">
 
-    <div class="drag-handle-area" id="dragHandle">
+    <div
+      class="drag-handle-area"
+      id="dragHandle">
 
       <div class="drag-handle-bar"></div>
 
@@ -1413,7 +1806,12 @@ input[type=checkbox]{
 
     <div
       id="modalInnerContent"
-      style="display:flex;flex-direction:column;height:100%;overflow:hidden;">
+      style="
+        display:flex;
+        flex-direction:column;
+        height:100%;
+        overflow:hidden;
+      ">
 
     </div>
 
@@ -1422,10 +1820,14 @@ input[type=checkbox]{
 </div>
 
 
-<div class="toast" id="toast"></div>
+<div
+  class="toast"
+  id="toast">
+</div>
 
 
 <script type="module">
+
 
 /* =========================================================
    FIREBASE
@@ -1459,59 +1861,69 @@ import {
 
 const firebaseConfig = {
 
-  apiKey:"AIzaSyAB_7lISvrpq57tOTxUBrHj4PpUOZb3b28",
+  apiKey:
+    "AIzaSyAB_7lISvrpq57tOTxUBrHj4PpUOZb3b28",
 
-  authDomain:"sorveteria-2b1b3.firebaseapp.com",
+  authDomain:
+    "sorveteria-2b1b3.firebaseapp.com",
 
-  projectId:"sorveteria-2b1b3",
+  projectId:
+    "sorveteria-2b1b3",
 
-  storageBucket:"sorveteria-2b1b3.firebasestorage.app",
+  storageBucket:
+    "sorveteria-2b1b3.firebasestorage.app",
 
-  messagingSenderId:"176234807867",
+  messagingSenderId:
+    "176234807867",
 
-  appId:"1:176234807867:web:dc2a711245142e05b3521e"
+  appId:
+    "1:176234807867:web:dc2a711245142e05b3521e"
 
 };
 
 
-const app = initializeApp(firebaseConfig);
-
-const db = getFirestore(app);
-
-const auth = getAuth(app);
-
-
-/*
-  Cache offline do Firestore.
-
-  Se o navegador não permitir persistência,
-  o aplicativo continua funcionando normalmente.
-*/
-
-enableIndexedDbPersistence(db).catch(function(error){
-
-  console.warn(
-    "Persistência offline não disponível:",
-    error.code
+const app =
+  initializeApp(
+    firebaseConfig
   );
 
-});
+const db =
+  getFirestore(app);
+
+const auth =
+  getAuth(app);
 
 
-const categoriasCol = collection(
-  db,
-  "categorias"
-);
+enableIndexedDbPersistence(db)
+  .catch(
+    function(error){
 
-const pedidosCol = collection(
-  db,
-  "pedidos"
-);
+      console.warn(
+        "Persistência offline não disponível:",
+        error.code
+      );
 
-const historicoCol = collection(
-  db,
-  "historico"
-);
+    }
+  );
+
+
+const categoriasCol =
+  collection(
+    db,
+    "categorias"
+  );
+
+const pedidosCol =
+  collection(
+    db,
+    "pedidos"
+  );
+
+const historicoCol =
+  collection(
+    db,
+    "historico"
+  );
 
 
 /* =========================================================
@@ -1644,9 +2056,12 @@ function escapeHtml(s){
 function toast(msg,isErr){
 
   const t =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
 
-  t.textContent = msg;
+  t.textContent =
+    msg;
 
   t.className =
     "toast show"
@@ -1659,7 +2074,9 @@ function toast(msg,isErr){
     setTimeout(
       function(){
 
-        t.classList.remove("show");
+        t.classList.remove(
+          "show"
+        );
 
       },
       2500
@@ -1671,22 +2088,30 @@ function toast(msg,isErr){
 function setOnline(ok,msg){
 
   const dot =
-    document.getElementById("statusDot");
+    document.getElementById(
+      "statusDot"
+    );
 
   const text =
-    document.getElementById("headerSub");
+    document.getElementById(
+      "headerSub"
+    );
 
   const fab =
-    document.getElementById("fabAdd");
+    document.getElementById(
+      "fabAdd"
+    );
 
   dot.className =
     "dot"
     +
     (ok ? "" : " off");
 
-  text.textContent = msg;
+  text.textContent =
+    msg;
 
-  fab.disabled = false;
+  fab.disabled =
+    false;
 
 }
 
@@ -1694,11 +2119,16 @@ function setOnline(ok,msg){
 function setOffline(){
 
   document
-    .getElementById("statusDot")
-    .className = "dot off";
+    .getElementById(
+      "statusDot"
+    )
+    .className =
+      "dot off";
 
   document
-    .getElementById("headerSub")
+    .getElementById(
+      "headerSub"
+    )
     .textContent =
       "Sem conexão — dados serão sincronizados";
 
@@ -1710,10 +2140,16 @@ window.addEventListener(
   function(){
 
     document
-      .getElementById("offlineBanner")
-      .classList.remove("show");
+      .getElementById(
+        "offlineBanner"
+      )
+      .classList.remove(
+        "show"
+      );
 
-    toast("Conexão restaurada");
+    toast(
+      "Conexão restaurada"
+    );
 
     setOnline(
       true,
@@ -1729,8 +2165,12 @@ window.addEventListener(
   function(){
 
     document
-      .getElementById("offlineBanner")
-      .classList.add("show");
+      .getElementById(
+        "offlineBanner"
+      )
+      .classList.add(
+        "show"
+      );
 
     setOffline();
 
@@ -1775,7 +2215,8 @@ function finalTotal(order){
 
 function todayStart(){
 
-  const d = new Date();
+  const d =
+    new Date();
 
   return new Date(
     d.getFullYear(),
@@ -1791,53 +2232,117 @@ function todayStart(){
 ========================================================= */
 
 const modalBox =
-  document.getElementById("modalBox");
+  document.getElementById(
+    "modalBox"
+  );
 
 const dragHandle =
-  document.getElementById("dragHandle");
+  document.getElementById(
+    "dragHandle"
+  );
 
 const modalBg =
-  document.getElementById("modalBg");
+  document.getElementById(
+    "modalBg"
+  );
 
-let isDragging = false;
-let startY = 0;
-let startHeight = 0;
+let isDragging =
+  false;
 
+let startY =
+  0;
+
+let startHeight =
+  0;
+
+
+/*
+  Sempre abre o modal com altura padrão
+  e posiciona o conteúdo no topo.
+*/
 
 function showModal(){
 
-  modalBox.style.height = "50vh";
+  modalBox.style.height =
+    "50vh";
 
-  modalBg.classList.add("show");
+  modalBg.classList.add(
+    "show"
+  );
+
+
+  requestAnimationFrame(
+    function(){
+
+      const body =
+        document.querySelector(
+          "#modalInnerContent .modal-body"
+        );
+
+      if(body){
+
+        body.scrollTop =
+          0;
+
+      }
+
+    }
+  );
 
 }
 
 
 function closeModal(){
 
-  modalBg.classList.remove("show");
+  modalBg.classList.remove(
+    "show"
+  );
 
 }
 
 
 /*
-  CORREÇÃO:
-  O conteúdo do modal não recebe listeners acumulados.
-  Cada tela usa delegação através de uma única função.
+  Sempre que o conteúdo do modal
+  for trocado, o scroll volta para
+  o início.
 */
 
 function setModalContent(html){
 
-  document
-    .getElementById("modalInnerContent")
-    .innerHTML = html;
+  const container =
+    document.getElementById(
+      "modalInnerContent"
+    );
+
+  container.innerHTML =
+    html;
+
+
+  requestAnimationFrame(
+    function(){
+
+      const body =
+        container.querySelector(
+          ".modal-body"
+        );
+
+      if(body){
+
+        body.scrollTop =
+          0;
+
+      }
+
+    }
+  );
 
 }
 
 
 function onDragStart(e){
 
-  isDragging = true;
+  isDragging =
+    true;
 
   startY =
     e.touches
@@ -1845,16 +2350,19 @@ function onDragStart(e){
       : e.clientY;
 
   startHeight =
-    modalBox.getBoundingClientRect().height;
+    modalBox.getBoundingClientRect()
+      .height;
 
-  modalBox.style.transition = "none";
+  modalBox.style.transition =
+    "none";
 
 }
 
 
 function onDragMove(e){
 
-  if(!isDragging) return;
+  if(!isDragging)
+    return;
 
   const currentY =
     e.touches
@@ -1874,7 +2382,8 @@ function onDragMove(e){
 
     closeModal();
 
-    isDragging=false;
+    isDragging =
+      false;
 
     return;
 
@@ -1892,9 +2401,11 @@ function onDragMove(e){
 
 function onDragEnd(){
 
-  if(!isDragging) return;
+  if(!isDragging)
+    return;
 
-  isDragging=false;
+  isDragging =
+    false;
 
   modalBox.style.transition =
     "height .05s ease-out";
@@ -1942,7 +2453,9 @@ modalBg.addEventListener(
     if(
       e.target === modalBg
       ||
-      e.target.closest("[data-close]")
+      e.target.closest(
+        "[data-close]"
+      )
     ){
 
       closeModal();
@@ -1958,7 +2471,9 @@ modalBg.addEventListener(
 ========================================================= */
 
 document
-  .querySelectorAll("nav.tabs button")
+  .querySelectorAll(
+    "nav.tabs button"
+  )
   .forEach(
     function(btn){
 
@@ -1967,20 +2482,30 @@ document
         function(){
 
           document
-            .querySelectorAll("nav.tabs button")
+            .querySelectorAll(
+              "nav.tabs button"
+            )
             .forEach(
               b =>
-                b.classList.remove("active")
+                b.classList.remove(
+                  "active"
+                )
             );
 
           document
-            .querySelectorAll(".view")
+            .querySelectorAll(
+              ".view"
+            )
             .forEach(
               v =>
-                v.classList.remove("active")
+                v.classList.remove(
+                  "active"
+                )
             );
 
-          btn.classList.add("active");
+          btn.classList.add(
+            "active"
+          );
 
           const viewId =
             btn.dataset.view;
@@ -1989,9 +2514,13 @@ document
             .getElementById(
               "view-"+viewId
             )
-            .classList.add("active");
+            .classList.add(
+              "active"
+            );
 
-          if(viewId==="relatorios"){
+          if(
+            viewId==="relatorios"
+          ){
 
             renderReports();
 
@@ -2012,7 +2541,9 @@ async function authenticate(){
 
   if(!auth.currentUser){
 
-    await signInAnonymously(auth);
+    await signInAnonymously(
+      auth
+    );
 
   }
 
@@ -2026,9 +2557,12 @@ async function authenticate(){
 async function ensureDefaultCategories(){
 
   const snap =
-    await getDocs(categoriasCol);
+    await getDocs(
+      categoriasCol
+    );
 
-  if(!snap.empty) return;
+  if(!snap.empty)
+    return;
 
   const batch =
     writeBatch(db);
@@ -2037,7 +2571,9 @@ async function ensureDefaultCategories(){
     function(c,index){
 
       const ref =
-        doc(categoriasCol);
+        doc(
+          categoriasCol
+        );
 
       batch.set(
         ref,
@@ -2094,7 +2630,9 @@ function initListeners(){
 
     function(error){
 
-      console.error(error);
+      console.error(
+        error
+      );
 
       toast(
         "Erro ao sincronizar categorias",
@@ -2130,7 +2668,9 @@ function initListeners(){
 
     function(error){
 
-      console.error(error);
+      console.error(
+        error
+      );
 
       toast(
         "Erro ao sincronizar pedidos",
@@ -2165,8 +2705,13 @@ function initListeners(){
 
       if(
         document
-          .getElementById("view-relatorios")
-          .classList.contains("active")
+          .getElementById(
+            "view-relatorios"
+          )
+          .classList
+          .contains(
+            "active"
+          )
       ){
 
         renderReports();
@@ -2177,7 +2722,9 @@ function initListeners(){
 
     function(error){
 
-      console.error(error);
+      console.error(
+        error
+      );
 
       toast(
         "Erro ao sincronizar histórico",
@@ -2210,11 +2757,18 @@ function initListeners(){
 
     initListeners();
 
-    if(!navigator.onLine){
+    if(
+      !navigator.onLine
+    ){
 
       document
-        .getElementById("offlineBanner")
-        .classList.add("show");
+        .getElementById(
+          "offlineBanner"
+        )
+        .classList
+        .add(
+          "show"
+        );
 
       setOffline();
 
@@ -2222,7 +2776,9 @@ function initListeners(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     setOnline(
       false,
@@ -2259,9 +2815,13 @@ function getFilteredOrders(){
   return state.orders.filter(
     function(o){
 
-      return String(o.customerName||"")
-        .toLowerCase()
-        .includes(term);
+      return String(
+        o.customerName||""
+      )
+      .toLowerCase()
+      .includes(
+        term
+      );
 
     }
   );
@@ -2286,7 +2846,7 @@ function renderOrders(){
       '<span class="ic">🍧</span>'+
       (
         state.orderSearch
-          ? "Nenhum cliente encontrado."
+          ? "Nenhuma comanda encontrada."
           : "Nenhum pedido em aberto."
       )+
       '</div>';
@@ -2301,7 +2861,8 @@ function renderOrders(){
       function(o){
 
         const isOpen =
-          state.openOrderId===o.id;
+          state.openOrderId===
+          o.id;
 
         const items =
           o.items||[];
@@ -2311,7 +2872,10 @@ function renderOrders(){
 
         const age =
           Date.now()-
-          Number(o.createdAt||Date.now());
+          Number(
+            o.createdAt||
+            Date.now()
+          );
 
         const ageHours =
           age/3600000;
@@ -2319,7 +2883,9 @@ function renderOrders(){
         let statusText =
           "Em aberto";
 
-        if(ageHours>2){
+        if(
+          ageHours>2
+        ){
 
           statusText =
             "Aberto há mais de 2h";
@@ -2341,15 +2907,25 @@ function renderOrders(){
 
                   '<div class="iname">'+
 
-                    escapeHtml(it.name)+
+                    escapeHtml(
+                      it.name
+                    )+
 
                     '<small>'+
+
                       escapeHtml(
-                        it.categoryName||""
+                        it.categoryName||
+                        ""
                       )+
+
                       ' • '+
-                      money(it.price)+
+
+                      money(
+                        it.price
+                      )+
+
                       ' un.'+
+
                     '</small>'+
 
                   '</div>'+
@@ -2358,8 +2934,12 @@ function renderOrders(){
 
                     '<button '+
                       'data-act="dec" '+
-                      'data-order="'+o.id+'" '+
-                      'data-item="'+it.id+'">'+
+                      'data-order="'+
+                        o.id+
+                      '" '+
+                      'data-item="'+
+                        it.id+
+                      '">'+
                       '−'+
                     '</button>'+
 
@@ -2369,8 +2949,12 @@ function renderOrders(){
 
                     '<button '+
                       'data-act="inc" '+
-                      'data-order="'+o.id+'" '+
-                      'data-item="'+it.id+'">'+
+                      'data-order="'+
+                        o.id+
+                      '" '+
+                      'data-item="'+
+                        it.id+
+                      '">'+
                       '+'+
                     '</button>'+
 
@@ -2378,15 +2962,20 @@ function renderOrders(){
 
                   '<div class="iprice">'+
                     money(
-                      it.price*it.qty
+                      it.price*
+                      it.qty
                     )+
                   '</div>'+
 
                   '<button '+
                     'class="irm" '+
                     'data-act="rm" '+
-                    'data-order="'+o.id+'" '+
-                    'data-item="'+it.id+'">'+
+                    'data-order="'+
+                      o.id+
+                    '" '+
+                    'data-item="'+
+                      it.id+
+                    '">'+
                     '✕'+
                   '</button>'+
 
@@ -2407,31 +2996,48 @@ function renderOrders(){
         return (
 
           '<div class="card order-card '+
-            (isOpen?"open":"")+
-            '" data-order="'+o.id+'">'+
+            (
+              isOpen
+                ? "open"
+                : ""
+            )+
+            '" data-order="'+
+              o.id+
+            '">'+
 
             '<div class="top" '+
               'data-act="toggle" '+
-              'data-order="'+o.id+'">'+
+              'data-order="'+
+                o.id+
+              '">'+
 
               '<div>'+
 
                 '<div class="name">'+
+
+                  'Comanda '+
+
                   escapeHtml(
                     o.customerName
                   )+
+
                 '</div>'+
 
                 '<div class="meta">'+
+
                   items.length+
+
                   ' item(ns) • '+
+
                   timeLabel(
                     o.createdAt
                   )+
+
                 '</div>'+
 
                 '<div class="order-status">'+
-                  '● '+statusText+
+                  '● '+
+                  statusText+
                 '</div>'+
 
               '</div>'+
@@ -2457,14 +3063,18 @@ function renderOrders(){
                 '<button '+
                   'class="btn btn-green" '+
                   'data-act="additem" '+
-                  'data-order="'+o.id+'">'+
+                  'data-order="'+
+                    o.id+
+                  '">'+
                   '+ Item'+
                 '</button>'+
 
                 '<button '+
                   'class="btn btn-blue" '+
                   'data-act="checkout" '+
-                  'data-order="'+o.id+'">'+
+                  'data-order="'+
+                    o.id+
+                  '">'+
                   '💳 Fechar'+
                 '</button>'+
 
@@ -2483,7 +3093,9 @@ function renderOrders(){
 
 
 document
-  .getElementById("orderSearch")
+  .getElementById(
+    "orderSearch"
+  )
   .addEventListener(
     "input",
     function(){
@@ -2498,7 +3110,9 @@ document
 
 
 document
-  .getElementById("ordersList")
+  .getElementById(
+    "ordersList"
+  )
   .addEventListener(
     "click",
     async function(e){
@@ -2508,7 +3122,8 @@ document
           "[data-act]"
         );
 
-      if(!b) return;
+      if(!b)
+        return;
 
       const act =
         b.dataset.act;
@@ -2519,16 +3134,21 @@ document
       const order =
         state.orders.find(
           o =>
-            o.id===orderId
+            o.id===
+            orderId
         );
 
-      if(!order) return;
+      if(!order)
+        return;
 
 
-      if(act==="toggle"){
+      if(
+        act==="toggle"
+      ){
 
         state.openOrderId =
-          state.openOrderId===orderId
+          state.openOrderId===
+          orderId
             ? null
             : orderId;
 
@@ -2539,18 +3159,26 @@ document
       }
 
 
-      if(act==="additem"){
+      if(
+        act==="additem"
+      ){
 
-        openItemPicker(orderId);
+        openItemPicker(
+          orderId
+        );
 
         return;
 
       }
 
 
-      if(act==="checkout"){
+      if(
+        act==="checkout"
+      ){
 
-        openCheckout(orderId);
+        openCheckout(
+          orderId
+        );
 
         return;
 
@@ -2572,41 +3200,60 @@ document
           (order.items||[])
             .map(
               it =>
-                Object.assign({},it)
+                Object.assign(
+                  {},
+                  it
+                )
             );
 
         const idx =
           items.findIndex(
             it =>
-              it.id===itemId
+              it.id===
+              itemId
           );
 
-        if(idx===-1) return;
+        if(idx===-1)
+          return;
 
 
-        if(act==="inc"){
+        if(
+          act==="inc"
+        ){
 
           items[idx].qty++;
 
         }
 
 
-        if(act==="dec"){
+        if(
+          act==="dec"
+        ){
 
           items[idx].qty--;
 
-          if(items[idx].qty<=0){
+          if(
+            items[idx].qty<=0
+          ){
 
-            items.splice(idx,1);
+            items.splice(
+              idx,
+              1
+            );
 
           }
 
         }
 
 
-        if(act==="rm"){
+        if(
+          act==="rm"
+        ){
 
-          items.splice(idx,1);
+          items.splice(
+            idx,
+            1
+          );
 
         }
 
@@ -2626,7 +3273,9 @@ document
 
         }catch(error){
 
-          console.error(error);
+          console.error(
+            error
+          );
 
           toast(
             "Erro ao atualizar item",
@@ -2642,11 +3291,13 @@ document
 
 
 /* =========================================================
-   NOVO PEDIDO
+   NOVA COMANDA
 ========================================================= */
 
 document
-  .getElementById("fabAdd")
+  .getElementById(
+    "fabAdd"
+  )
   .addEventListener(
     "click",
     openNewOrderModal
@@ -2659,9 +3310,13 @@ function openNewOrderModal(){
 
     '<div class="modal-head">'+
 
-      '<h3>Novo pedido</h3>'+
+      '<h3>Nova comanda</h3>'+
 
-      '<button class="modal-close" data-close>✕</button>'+
+      '<button '+
+        'class="modal-close" '+
+        'data-close>'+
+        '✕'+
+      '</button>'+
 
     '</div>'+
 
@@ -2669,19 +3324,27 @@ function openNewOrderModal(){
 
       '<div class="center-form">'+
 
-        '<label>Nome do cliente</label>'+
+        '<label>'+
+          'Número da comanda'+
+        '</label>'+
 
         '<input '+
-          'type="text" '+
+          'type="number" '+
+          'inputmode="numeric" '+
+          'pattern="[0-9]*" '+
           'id="newCustomerName" '+
-          'placeholder="Ex: Maria, João...">'+
+          'placeholder="Digite o número da comanda" '+
+          'min="1" '+
+          'step="1" '+
+          'autocomplete="off" '+
+          'style="width:100%;font-size:22px;text-align:center;padding:14px;">'+
 
         '<button '+
           'class="btn btn-green btn-block" '+
           'style="margin-top:16px;" '+
           'id="confirmNewOrder">'+
 
-          'Iniciar pedido'+
+          'Iniciar comanda'+
 
         '</button>'+
 
@@ -2699,9 +3362,27 @@ function openNewOrderModal(){
       "newCustomerName"
     );
 
+
   setTimeout(
-    () => input.focus(),
-    200
+    function(){
+
+      input.focus();
+
+      try{
+
+        input.click();
+
+      }catch(error){
+
+        console.warn(
+          "Não foi possível abrir teclado:",
+          error
+        );
+
+      }
+
+    },
+    250
   );
 
 
@@ -2709,7 +3390,11 @@ function openNewOrderModal(){
     "keydown",
     function(e){
 
-      if(e.key==="Enter"){
+      if(
+        e.key==="Enter"
+      ){
+
+        e.preventDefault();
 
         document
           .getElementById(
@@ -2731,18 +3416,58 @@ function openNewOrderModal(){
       "click",
       async function(){
 
-        const name =
-          input.value.trim();
+        const commandNumber =
+          String(
+            input.value||""
+          )
+          .replace(
+            /\D/g,
+            ""
+          )
+          .trim();
 
-        if(!name){
+
+        if(
+          !commandNumber
+        ){
 
           toast(
-            "Digite o nome do cliente"
+            "Digite o número da comanda"
           );
+
+          input.focus();
 
           return;
 
         }
+
+
+        if(
+          Number(commandNumber)<=0
+        ){
+
+          toast(
+            "Digite um número de comanda válido"
+          );
+
+          input.focus();
+
+          return;
+
+        }
+
+
+        /*
+          IMPORTANTE:
+          customerName continua exatamente
+          como campo do Firebase.
+
+          Apenas estamos colocando
+          o número da comanda nele.
+        */
+
+        const name =
+          commandNumber;
 
 
         const existing =
@@ -2751,9 +3476,8 @@ function openNewOrderModal(){
               String(
                 o.customerName||""
               )
-              .toLowerCase()
               ===
-              name.toLowerCase()
+              commandNumber
           );
 
 
@@ -2762,13 +3486,17 @@ function openNewOrderModal(){
           let orderId;
 
 
-          if(existing){
+          if(
+            existing
+          ){
 
             orderId =
               existing.id;
 
             toast(
-              "Cliente já possui pedido aberto"
+              "A comanda "+
+              commandNumber+
+              " já está aberta"
             );
 
           }else{
@@ -2778,7 +3506,8 @@ function openNewOrderModal(){
                 pedidosCol,
                 {
 
-                  customerName:name,
+                  customerName:
+                    name,
 
                   items:[],
 
@@ -2786,7 +3515,8 @@ function openNewOrderModal(){
 
                   paymentMethod:null,
 
-                  createdAt:Date.now()
+                  createdAt:
+                    Date.now()
 
                 }
               );
@@ -2802,14 +3532,18 @@ function openNewOrderModal(){
 
           closeModal();
 
-          openItemPicker(orderId);
+          openItemPicker(
+            orderId
+          );
 
         }catch(error){
 
-          console.error(error);
+          console.error(
+            error
+          );
 
           toast(
-            "Erro ao criar pedido",
+            "Erro ao criar comanda",
             true
           );
 
@@ -2830,10 +3564,12 @@ function openItemPicker(orderId){
   const order =
     state.orders.find(
       o =>
-        o.id===orderId
+        o.id===
+        orderId
     );
 
-  if(!order) return;
+  if(!order)
+    return;
 
 
   let activeCat =
@@ -2851,25 +3587,32 @@ function openItemPicker(orderId){
 
             '<div class="chip '+
               (
-                c.id===catId
+                c.id===
+                catId
                   ? "active"
                   : ""
               )+
               '" data-pickcat="'+
               c.id+
               '">'+
+
               c.emoji+
               ' '+
-              escapeHtml(c.name)+
+              escapeHtml(
+                c.name
+              )+
+
             '</div>'
 
-        ).join("");
+        )
+        .join("");
 
 
     const cat =
       state.categories.find(
         c =>
-          c.id===catId
+          c.id===
+          catId
       );
 
 
@@ -2900,7 +3643,9 @@ function openItemPicker(orderId){
             ||
             p.name
               .toLowerCase()
-              .includes(search)
+              .includes(
+                search
+              )
           )
       );
 
@@ -2917,15 +3662,23 @@ function openItemPicker(orderId){
 
             '<div '+
               'class="pick-item" '+
-              'data-pick="'+it.id+'" '+
-              'data-cat="'+cat.id+'">'+
+              'data-pick="'+
+                it.id+
+              '" '+
+              'data-cat="'+
+                cat.id+
+              '">'+
 
               '<span class="pn">'+
-                escapeHtml(it.name)+
+                escapeHtml(
+                  it.name
+                )+
               '</span>'+
 
               '<span class="pp">'+
-                money(it.price)+
+                money(
+                  it.price
+                )+
               '</span>'+
 
             '</div>'
@@ -2937,7 +3690,7 @@ function openItemPicker(orderId){
 
       :
 
-      '<div style="font-size:13px;color:var(--text-soft);padding:14px 4px;">'+
+      '<div style="grid-column:1/-1;font-size:13px;color:var(--text-soft);padding:14px 4px;">'+
       'Nenhum produto disponível nesta categoria.'+
       '</div>';
 
@@ -2949,11 +3702,13 @@ function openItemPicker(orderId){
       '</div>'+
 
       '<div style="margin-bottom:8px;">'+
+
         '<input '+
           'type="search" '+
           'id="pickerSearch" '+
           'placeholder="🔎 Buscar produto..." '+
           'style="width:100%;">'+
+
       '</div>'+
 
       '<div id="pickItemsList">'+
@@ -2969,18 +3724,29 @@ function openItemPicker(orderId){
 
     '<div class="modal-head">'+
 
-      '<h3>Adicionar item — '+
+      '<h3>'+
+        'Adicionar item — Comanda '+
         escapeHtml(
           order.customerName
         )+
       '</h3>'+
 
-      '<button class="modal-close" data-close>✕</button>'+
+      '<button '+
+        'class="modal-close" '+
+        'data-close>'+
+        '✕'+
+      '</button>'+
 
     '</div>'+
 
-    '<div class="modal-body" id="pickerBody">'+
-      bodyHtml(activeCat)+
+    '<div '+
+      'class="modal-body" '+
+      'id="pickerBody">'+
+
+      bodyHtml(
+        activeCat
+      )+
+
     '</div>'
 
   );
@@ -2994,218 +3760,257 @@ function openItemPicker(orderId){
     );
 
 
-  /*
-    Listener único por abertura.
-    Ele é removido antes de uma nova tela ser criada.
-  */
+  container.onclick =
+    async function(e){
 
-  container.onclick = async function(e){
-
-    const chip =
-      e.target.closest(
-        "[data-pickcat]"
-      );
-
-    if(chip){
-
-      activeCat =
-        chip.dataset.pickcat;
-
-      document
-        .getElementById(
-          "pickerBody"
-        )
-        .innerHTML =
-          bodyHtml(activeCat);
-
-      return;
-
-    }
-
-
-    const pick =
-      e.target.closest(
-        "[data-pick]"
-      );
-
-    if(!pick) return;
-
-
-    const cat =
-      state.categories.find(
-        c =>
-          c.id===pick.dataset.cat
-      );
-
-    if(!cat) return;
-
-
-    const prod =
-      (cat.items||[])
-        .find(
-          p =>
-            p.id===pick.dataset.pick
+      const chip =
+        e.target.closest(
+          "[data-pickcat]"
         );
 
-    if(!prod) return;
+      if(chip){
+
+        activeCat =
+          chip.dataset.pickcat;
+
+        document
+          .getElementById(
+            "pickerBody"
+          )
+          .innerHTML =
+            bodyHtml(
+              activeCat
+            );
+
+        document
+          .getElementById(
+            "pickerBody"
+          )
+          .scrollTop =
+            0;
+
+        return;
+
+      }
 
 
-    const freshOrder =
-      state.orders.find(
-        o =>
-          o.id===orderId
-      );
+      const pick =
+        e.target.closest(
+          "[data-pick]"
+        );
 
-    if(!freshOrder) return;
+      if(!pick)
+        return;
 
 
-    const items =
-      (freshOrder.items||[])
-        .map(
+      const cat =
+        state.categories.find(
+          c =>
+            c.id===
+            pick.dataset.cat
+        );
+
+      if(!cat)
+        return;
+
+
+      const prod =
+        (cat.items||[])
+          .find(
+            p =>
+              p.id===
+              pick.dataset.pick
+          );
+
+      if(!prod)
+        return;
+
+
+      const freshOrder =
+        state.orders.find(
+          o =>
+            o.id===
+            orderId
+        );
+
+      if(!freshOrder)
+        return;
+
+
+      const items =
+        (freshOrder.items||[])
+          .map(
+            it =>
+              Object.assign(
+                {},
+                it
+              )
+          );
+
+
+      const idx =
+        items.findIndex(
           it =>
-            Object.assign({},it)
+            it.itemId===
+            prod.id
         );
 
 
-    const idx =
-      items.findIndex(
-        it =>
-          it.itemId===prod.id
-      );
+      if(idx>-1){
+
+        items[idx].qty++;
+
+      }else{
+
+        items.push({
+
+          id:uid(),
+
+          itemId:
+            prod.id,
+
+          name:
+            prod.name,
+
+          price:
+            Number(
+              prod.price
+            )||0,
+
+          categoryName:
+            cat.name,
+
+          qty:1
+
+        });
+
+      }
 
 
-    if(idx>-1){
+      try{
 
-      items[idx].qty++;
-
-    }else{
-
-      items.push({
-
-        id:uid(),
-
-        itemId:prod.id,
-
-        name:prod.name,
-
-        price:Number(prod.price)||0,
-
-        categoryName:cat.name,
-
-        qty:1
-
-      });
-
-    }
-
-
-    try{
-
-      await updateDoc(
-        doc(
-          db,
-          "pedidos",
-          orderId
-        ),
-        {
-          items:items
-        }
-      );
-
-      toast(
-        prod.name+" adicionado"
-      );
-
-    }catch(error){
-
-      console.error(error);
-
-      toast(
-        "Erro ao adicionar item",
-        true
-      );
-
-    }
-
-  };
-
-
-  container.oninput = function(e){
-
-    if(
-      e.target.id!=="pickerSearch"
-    ){
-
-      return;
-
-    }
-
-
-    const search =
-      e.target.value
-        .trim()
-        .toLowerCase();
-
-
-    const cat =
-      state.categories.find(
-        c =>
-          c.id===activeCat
-      );
-
-    if(!cat) return;
-
-
-    const items =
-      (cat.items||[])
-        .filter(
-          p =>
-            p.active!==false
-            &&
-            p.name
-              .toLowerCase()
-              .includes(search)
+        await updateDoc(
+          doc(
+            db,
+            "pedidos",
+            orderId
+          ),
+          {
+            items:items
+          }
         );
 
+        toast(
+          prod.name+
+          " adicionado"
+        );
 
-    const list =
-      document
-        .getElementById(
+      }catch(error){
+
+        console.error(
+          error
+        );
+
+        toast(
+          "Erro ao adicionar item",
+          true
+        );
+
+      }
+
+    };
+
+
+  container.oninput =
+    function(e){
+
+      if(
+        e.target.id!==
+        "pickerSearch"
+      ){
+
+        return;
+
+      }
+
+
+      const search =
+        e.target.value
+          .trim()
+          .toLowerCase();
+
+
+      const cat =
+        state.categories.find(
+          c =>
+            c.id===
+            activeCat
+        );
+
+      if(!cat)
+        return;
+
+
+      const items =
+        (cat.items||[])
+          .filter(
+            p =>
+              p.active!==false
+              &&
+              p.name
+                .toLowerCase()
+                .includes(
+                  search
+                )
+          );
+
+
+      const list =
+        document.getElementById(
           "pickItemsList"
         );
 
 
-    list.innerHTML =
-      items.length
+      list.innerHTML =
+        items.length
 
-      ?
+        ?
 
-      items.map(
-        it =>
+        items.map(
+          it =>
 
-          '<div class="pick-item" data-pick="'+
-          it.id+
-          '" data-cat="'+cat.id+'">'+
+            '<div '+
+              'class="pick-item" '+
+              'data-pick="'+
+                it.id+
+              '" '+
+              'data-cat="'+
+                cat.id+
+              '">'+
 
-          '<span class="pn">'+
-          escapeHtml(it.name)+
-          '</span>'+
+              '<span class="pn">'+
+                escapeHtml(
+                  it.name
+                )+
+              '</span>'+
 
-          '<span class="pp">'+
-          money(it.price)+
-          '</span>'+
+              '<span class="pp">'+
+                money(
+                  it.price
+                )+
+              '</span>'+
 
-          '</div>'
+            '</div>'
 
-      ).join("")
+        ).join("")
 
-      :
+        :
 
-      '<div style="font-size:13px;color:var(--text-soft);padding:14px;">'+
-      'Nenhum produto encontrado.'+
-      '</div>';
+        '<div style="grid-column:1/-1;font-size:13px;color:var(--text-soft);padding:14px;">'+
+        'Nenhum produto encontrado.'+
+        '</div>';
 
-  };
+    };
 
 }
 
@@ -3219,10 +4024,12 @@ function openCheckout(orderId){
   const order =
     state.orders.find(
       o =>
-        o.id===orderId
+        o.id===
+        orderId
     );
 
-  if(!order) return;
+  if(!order)
+    return;
 
 
   if(
@@ -3241,14 +4048,19 @@ function openCheckout(orderId){
 
 
   let discount =
-    Number(order.discount)||0;
+    Number(
+      order.discount
+    )||0;
 
   let payment =
-    order.paymentMethod||"pix";
+    order.paymentMethod||
+    "pix";
 
 
   const subtotal =
-    orderTotal(order);
+    orderTotal(
+      order
+    );
 
 
   function renderCheckout(){
@@ -3266,42 +4078,64 @@ function openCheckout(orderId){
 
         '<h3>Fechar venda</h3>'+
 
-        '<button class="modal-close" data-close>✕</button>'+
+        '<button '+
+          'class="modal-close" '+
+          'data-close>'+
+          '✕'+
+        '</button>'+
 
       '</div>'+
 
       '<div class="modal-body">'+
 
         '<div style="font-family:Fredoka;font-size:18px;">'+
+
+          'Comanda '+
+
           escapeHtml(
             order.customerName
           )+
+
         '</div>'+
 
         '<div style="font-size:12px;color:var(--text-soft);margin-top:3px;">'+
+
           order.items.length+
           ' item(ns)'+
+
         '</div>'+
 
         '<div class="checkout-total">'+
 
           '<div class="checkout-line">'+
+
             '<span>Subtotal</span>'+
-            '<b>'+money(subtotal)+'</b>'+
+
+            '<b>'+
+              money(subtotal)+
+            '</b>'+
+
           '</div>'+
 
           '<div class="checkout-line">'+
+
             '<span>Desconto</span>'+
-            '<b style="color:var(--danger);">-'+
+
+            '<b style="color:var(--danger);">'+
+              '-'+
               money(discount)+
             '</b>'+
+
           '</div>'+
 
           '<div class="checkout-total-final">'+
+
             '<span>TOTAL</span>'+
+
             '<span>'+
               money(total)+
             '</span>'+
+
           '</div>'+
 
         '</div>'+
@@ -3315,7 +4149,9 @@ function openCheckout(orderId){
           'id="checkoutDiscount" '+
           'min="0" '+
           'step="0.01" '+
-          'value="'+discount+'" '+
+          'value="'+
+            discount+
+          '" '+
           'style="width:100%;">'+
 
         '<label style="font-size:12.5px;font-weight:800;color:var(--text-soft);display:block;margin:12px 0 6px;">'+
@@ -3354,7 +4190,10 @@ function openCheckout(orderId){
           'class="btn btn-green btn-block" '+
           'id="finishSale" '+
           'style="margin-top:16px;">'+
-          '✓ Finalizar venda — '+money(total)+
+
+          '✓ Finalizar venda — '+
+          money(total)+
+
         '</button>'+
 
       '</div>'
@@ -3375,7 +4214,9 @@ function openCheckout(orderId){
               0,
               Math.min(
                 subtotal,
-                Number(this.value)||0
+                Number(
+                  this.value
+                )||0
               )
             );
 
@@ -3462,11 +4303,9 @@ function paymentButton(
 }
 
 
-/*
-  FECHAMENTO ATÔMICO:
-  histórico + exclusão do pedido
-  acontecem no mesmo writeBatch.
-*/
+/* =========================================================
+   FECHAMENTO ATÔMICO
+========================================================= */
 
 async function finishSale(
   order,
@@ -3475,7 +4314,9 @@ async function finishSale(
 ){
 
   const subtotal =
-    orderTotal(order);
+    orderTotal(
+      order
+    );
 
   const final =
     Math.max(
@@ -3499,7 +4340,7 @@ async function finishSale(
 
   if(
     !confirm(
-      'Finalizar venda de '+
+      'Finalizar venda da comanda '+
       order.customerName+
       ' por '+
       money(final)+
@@ -3517,11 +4358,15 @@ async function finishSale(
   try{
 
     const batch =
-      writeBatch(db);
+      writeBatch(
+        db
+      );
 
 
     const historyRef =
-      doc(historicoCol);
+      doc(
+        historicoCol
+      );
 
 
     batch.set(
@@ -3550,7 +4395,8 @@ async function finishSale(
           Date.now(),
 
         createdAt:
-          order.createdAt||Date.now()
+          order.createdAt||
+          Date.now()
 
       }
     );
@@ -3568,7 +4414,8 @@ async function finishSale(
     await batch.commit();
 
 
-    state.openOrderId = null;
+    state.openOrderId =
+      null;
 
     closeModal();
 
@@ -3579,7 +4426,9 @@ async function finishSale(
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      error
+    );
 
     toast(
       "Erro ao finalizar venda. A venda não foi concluída.",
@@ -3618,10 +4467,14 @@ function dayLabel(ts){
       b.toDateString();
 
 
-  if(sameDay(d,today))
+  if(
+    sameDay(d,today)
+  )
     return "Hoje";
 
-  if(sameDay(d,yest))
+  if(
+    sameDay(d,yest)
+  )
     return "Ontem";
 
 
@@ -3698,7 +4551,9 @@ function renderHistory(){
           h.customerName||""
         )
         .toLowerCase()
-        .includes(term)
+        .includes(
+          term
+        )
     );
 
 
@@ -3734,7 +4589,8 @@ function renderHistory(){
           ).toDateString()
           ===
           todayStr
-      ).length;
+      )
+      .length;
 
 
   sumEl.innerHTML =
@@ -3743,7 +4599,9 @@ function renderHistory(){
 
       '<div>'+
 
-        '<div class="lbl">TOTAL VENDIDO HOJE</div>'+
+        '<div class="lbl">'+
+          'TOTAL VENDIDO HOJE'+
+        '</div>'+
 
         '<div class="val">'+
           money(totalToday)+
@@ -3761,16 +4619,21 @@ function renderHistory(){
     '</div>';
 
 
-  if(!history.length){
+  if(
+    !history.length
+  ){
 
     el.innerHTML =
       '<div class="empty">'+
+
         '<span class="ic">📖</span>'+
+
         (
           term
-            ? "Nenhum cliente encontrado."
+            ? "Nenhuma comanda encontrada."
             : "Nenhuma conta fechada ainda."
         )+
+
       '</div>';
 
     return;
@@ -3780,7 +4643,8 @@ function renderHistory(){
 
   let groups = [];
 
-  let lastLabel = null;
+  let lastLabel =
+    null;
 
 
   history.forEach(
@@ -3792,21 +4656,26 @@ function renderHistory(){
         );
 
 
-      if(lbl!==lastLabel){
+      if(
+        lbl!==lastLabel
+      ){
 
         groups.push({
           label:lbl,
           items:[]
         });
 
-        lastLabel=lbl;
+        lastLabel =
+          lbl;
 
       }
 
 
       groups[
         groups.length-1
-      ].items.push(h);
+      ].items.push(
+        h
+      );
 
     }
   );
@@ -3833,7 +4702,9 @@ function renderHistory(){
                       "Outros";
 
 
-                    if(!catMap[catName]){
+                    if(
+                      !catMap[catName]
+                    ){
 
                       catMap[catName]=[];
 
@@ -3883,41 +4754,57 @@ function renderHistory(){
                     '<div>'+
 
                       '<div class="name">'+
+
+                        'Comanda '+
+
                         escapeHtml(
                           h.customerName
                         )+
+
                       '</div>'+
 
                       '<div class="time">'+
+
                         timeLabel(
                           h.closedAt
                         )+
+
                         ' • '+
+
                         paymentLabel(
                           h.paymentMethod
                         )+
+
                       '</div>'+
 
                     '</div>'+
 
                     '<div class="total">'+
-                      money(h.total)+
+                      money(
+                        h.total
+                      )+
                     '</div>'+
 
                   '</div>'+
 
                   '<div class="items-summary">'+
-                    escapeHtml(summary)+
+                    escapeHtml(
+                      summary
+                    )+
                   '</div>'+
 
                   (
-                    Number(h.discount)>0
+                    Number(
+                      h.discount
+                    )>0
 
                     ?
 
                     '<div style="font-size:11px;color:var(--danger);margin-top:5px;">'+
                       'Desconto: '+
-                      money(h.discount)+
+                      money(
+                        h.discount
+                      )+
                     '</div>'
 
                     :
@@ -3930,8 +4817,12 @@ function renderHistory(){
                     '<button '+
                       'class="icon-btn danger" '+
                       'data-act="rmhist" '+
-                      'data-hist="'+h.id+'">'+
+                      'data-hist="'+
+                        h.id+
+                      '">'+
+
                       '🗑 remover'+
+
                     '</button>'+
 
                   '</div>'+
@@ -3949,6 +4840,7 @@ function renderHistory(){
           '<div class="hist-day-label">'+
             g.label+
           '</div>'+
+
           cards
 
         );
@@ -3960,7 +4852,9 @@ function renderHistory(){
 
 
 document
-  .getElementById("historySearch")
+  .getElementById(
+    "historySearch"
+  )
   .addEventListener(
     "input",
     function(){
@@ -3975,7 +4869,9 @@ document
 
 
 document
-  .getElementById("historyList")
+  .getElementById(
+    "historyList"
+  )
   .addEventListener(
     "click",
     async function(e){
@@ -3988,7 +4884,8 @@ document
       if(
         !b
         ||
-        b.dataset.act!=="rmhist"
+        b.dataset.act!==
+        "rmhist"
       ){
 
         return;
@@ -4003,11 +4900,13 @@ document
       const entry =
         state.history.find(
           h =>
-            h.id===histId
+            h.id===
+            histId
         );
 
 
-      if(!entry) return;
+      if(!entry)
+        return;
 
 
       if(
@@ -4040,7 +4939,9 @@ document
 
       }catch(error){
 
-        console.error(error);
+        console.error(
+          error
+        );
 
         toast(
           "Erro ao remover venda",
@@ -4071,7 +4972,9 @@ function renderCategories(){
       .toLowerCase();
 
 
-  if(!state.categories.length){
+  if(
+    !state.categories.length
+  ){
 
     el.innerHTML =
       '<div class="empty">'+
@@ -4089,7 +4992,8 @@ function renderCategories(){
       function(c){
 
         const isOpen =
-          state.openCatId===c.id;
+          state.openCatId===
+          c.id;
 
 
         let items =
@@ -4103,7 +5007,9 @@ function renderCategories(){
               p =>
                 p.name
                   .toLowerCase()
-                  .includes(search)
+                  .includes(
+                    search
+                  )
             );
 
         }
@@ -4134,13 +5040,19 @@ function renderCategories(){
                       : "product-off"
                   )+
                   '" '+
-                  'data-prod="'+p.id+'" '+
-                  'data-cat="'+c.id+'">'+
+                  'data-prod="'+
+                    p.id+
+                  '" '+
+                  'data-cat="'+
+                    c.id+
+                  '">'+
 
                   '<input '+
                     'type="text" '+
                     'value="'+
-                      escapeHtml(p.name)+
+                      escapeHtml(
+                        p.name
+                      )+
                     '" '+
                     'data-field="name">'+
 
@@ -4149,7 +5061,9 @@ function renderCategories(){
                     'step="0.01" '+
                     'min="0" '+
                     'value="'+
-                      Number(p.price||0).toFixed(2)+
+                      Number(
+                        p.price||0
+                      ).toFixed(2)+
                     '" '+
                     'data-field="price">'+
 
@@ -4161,32 +5075,46 @@ function renderCategories(){
                         : ""
                     )+
                     '">'+
+
                     (
                       active
                         ? "Ativo"
                         : "Pausado"
                     )+
+
                   '</span>'+
 
                   '<button '+
                     'class="icon-btn" '+
                     'data-act="toggleprod" '+
-                    'data-cat="'+c.id+'" '+
-                    'data-prod="'+p.id+'" '+
+                    'data-cat="'+
+                      c.id+
+                    '" '+
+                    'data-prod="'+
+                      p.id+
+                    '" '+
                     'title="Ativar/desativar">'+
+
                     (
                       active
                         ? "⏸"
                         : "▶"
                     )+
+
                   '</button>'+
 
                   '<button '+
                     'class="icon-btn danger" '+
                     'data-act="rmprod" '+
-                    'data-cat="'+c.id+'" '+
-                    'data-prod="'+p.id+'">'+
+                    'data-cat="'+
+                      c.id+
+                    '" '+
+                    'data-prod="'+
+                      p.id+
+                    '">'+
+
                     '🗑'+
+
                   '</button>'+
 
                 '</div>'
@@ -4199,11 +5127,13 @@ function renderCategories(){
           :
 
           '<div style="font-size:13px;color:var(--text-soft);padding:6px 0;">'+
+
           (
             search
               ? "Nenhum produto encontrado."
               : "Nenhum item cadastrado."
           )+
+
           '</div>';
 
 
@@ -4215,11 +5145,15 @@ function renderCategories(){
                 ? "open"
                 : ""
             )+
-            '" data-cat="'+c.id+'">'+
+            '" data-cat="'+
+              c.id+
+            '">'+
 
             '<div class="head" '+
               'data-act="togglecat" '+
-              'data-cat="'+c.id+'">'+
+              'data-cat="'+
+                c.id+
+              '">'+
 
               '<div '+
                 'class="cat-dot" '+
@@ -4228,13 +5162,17 @@ function renderCategories(){
                   '22;color:'+
                   c.color+
                   ';">'+
+
                 c.emoji+
+
               '</div>'+
 
               '<div class="titlewrap">'+
 
                 '<div class="cname">'+
-                  escapeHtml(c.name)+
+                  escapeHtml(
+                    c.name
+                  )+
                 '</div>'+
 
                 '<div class="ccount">'+
@@ -4255,18 +5193,26 @@ function renderCategories(){
                 '<input '+
                   'type="text" '+
                   'value="'+
-                    escapeHtml(c.name)+
+                    escapeHtml(
+                      c.name
+                    )+
                   '" '+
                   'data-field="catname" '+
-                  'data-cat="'+c.id+'" '+
+                  'data-cat="'+
+                    c.id+
+                  '" '+
                   'style="font-weight:800;">'+
 
                 '<button '+
                   'class="icon-btn danger" '+
                   'data-act="rmcat" '+
-                  'data-cat="'+c.id+'" '+
+                  'data-cat="'+
+                    c.id+
+                  '" '+
                   'title="Excluir categoria">'+
+
                   '🗑 categoria'+
+
                 '</button>'+
 
               '</div>'+
@@ -4278,20 +5224,28 @@ function renderCategories(){
                 '<input '+
                   'type="text" '+
                   'placeholder="Novo item" '+
-                  'id="newname-'+c.id+'">'+
+                  'id="newname-'+
+                    c.id+
+                  '">'+
 
                 '<input '+
                   'type="number" '+
                   'step="0.01" '+
                   'min="0" '+
                   'placeholder="Preço" '+
-                  'id="newprice-'+c.id+'">'+
+                  'id="newprice-'+
+                    c.id+
+                  '">'+
 
                 '<button '+
                   'class="btn btn-green" '+
                   'data-act="addprod" '+
-                  'data-cat="'+c.id+'">'+
+                  'data-cat="'+
+                    c.id+
+                  '">'+
+
                   '+'+
+
                 '</button>'+
 
               '</div>'+
@@ -4309,7 +5263,9 @@ function renderCategories(){
 
 
 document
-  .getElementById("productSearch")
+  .getElementById(
+    "productSearch"
+  )
   .addEventListener(
     "input",
     function(){
@@ -4324,7 +5280,9 @@ document
 
 
 document
-  .getElementById("catList")
+  .getElementById(
+    "catList"
+  )
   .addEventListener(
     "click",
     async function(e){
@@ -4334,7 +5292,8 @@ document
           "[data-act]"
         );
 
-      if(!b) return;
+      if(!b)
+        return;
 
 
       const act =
@@ -4344,10 +5303,13 @@ document
         b.dataset.cat;
 
 
-      if(act==="togglecat"){
+      if(
+        act==="togglecat"
+      ){
 
         state.openCatId =
-          state.openCatId===catId
+          state.openCatId===
+          catId
             ? null
             : catId;
 
@@ -4358,19 +5320,24 @@ document
       }
 
 
-      if(act==="rmcat"){
+      if(
+        act==="rmcat"
+      ){
 
         const cat =
           state.categories.find(
             c =>
-              c.id===catId
+              c.id===
+              catId
           );
 
-        if(!cat) return;
+        if(!cat)
+          return;
 
 
         const count =
-          (cat.items||[]).length;
+          (cat.items||[])
+            .length;
 
 
         const msg =
@@ -4393,7 +5360,10 @@ document
           '"?';
 
 
-        if(!confirm(msg)) return;
+        if(
+          !confirm(msg)
+        )
+          return;
 
 
         try{
@@ -4412,7 +5382,9 @@ document
 
         }catch(error){
 
-          console.error(error);
+          console.error(
+            error
+          );
 
           toast(
             "Erro ao excluir categoria",
@@ -4426,7 +5398,9 @@ document
       }
 
 
-      if(act==="rmprod"){
+      if(
+        act==="rmprod"
+      ){
 
         const prodId =
           b.dataset.prod;
@@ -4435,22 +5409,26 @@ document
         const cat =
           state.categories.find(
             c =>
-              c.id===catId
+              c.id===
+              catId
           );
 
 
-        if(!cat) return;
+        if(!cat)
+          return;
 
 
         const product =
           (cat.items||[])
             .find(
               p =>
-                p.id===prodId
+                p.id===
+                prodId
             );
 
 
-        if(!product) return;
+        if(!product)
+          return;
 
 
         if(
@@ -4470,7 +5448,8 @@ document
         const items =
           cat.items.filter(
             p =>
-              p.id!==prodId
+              p.id!==
+              prodId
           );
 
 
@@ -4493,7 +5472,9 @@ document
 
         }catch(error){
 
-          console.error(error);
+          console.error(
+            error
+          );
 
           toast(
             "Erro ao remover produto",
@@ -4507,7 +5488,9 @@ document
       }
 
 
-      if(act==="toggleprod"){
+      if(
+        act==="toggleprod"
+      ){
 
         const prodId =
           b.dataset.prod;
@@ -4516,17 +5499,20 @@ document
         const cat =
           state.categories.find(
             c =>
-              c.id===catId
+              c.id===
+              catId
           );
 
 
-        if(!cat) return;
+        if(!cat)
+          return;
 
 
         const items =
           cat.items.map(
             p =>
-              p.id===prodId
+              p.id===
+              prodId
 
                 ?
 
@@ -4566,7 +5552,9 @@ document
 
         }catch(error){
 
-          console.error(error);
+          console.error(
+            error
+          );
 
           toast(
             "Erro ao atualizar produto",
@@ -4580,7 +5568,9 @@ document
       }
 
 
-      if(act==="addprod"){
+      if(
+        act==="addprod"
+      ){
 
         const nameInp =
           document.getElementById(
@@ -4623,11 +5613,13 @@ document
         const cat =
           state.categories.find(
             c =>
-              c.id===catId
+              c.id===
+              catId
           );
 
 
-        if(!cat) return;
+        if(!cat)
+          return;
 
 
         const items =
@@ -4667,7 +5659,9 @@ document
 
         }catch(error){
 
-          console.error(error);
+          console.error(
+            error
+          );
 
           toast(
             "Erro ao salvar produto",
@@ -4683,7 +5677,9 @@ document
 
 
 document
-  .getElementById("catList")
+  .getElementById(
+    "catList"
+  )
   .addEventListener(
     "change",
     async function(e){
@@ -4694,10 +5690,13 @@ document
       const field =
         input.dataset.field;
 
-      if(!field) return;
+      if(!field)
+        return;
 
 
-      if(field==="catname"){
+      if(
+        field==="catname"
+      ){
 
         const catId =
           input.dataset.cat;
@@ -4706,7 +5705,8 @@ document
           input.value.trim();
 
 
-        if(!val) return;
+        if(!val)
+          return;
 
 
         try{
@@ -4762,36 +5762,46 @@ document
         const cat =
           state.categories.find(
             c =>
-              c.id===catId
+              c.id===
+              catId
           );
 
 
-        if(!cat) return;
+        if(!cat)
+          return;
 
 
         const items =
           cat.items.map(
             p =>
-              Object.assign({},p)
+              Object.assign(
+                {},
+                p
+              )
           );
 
 
         const idx =
           items.findIndex(
             p =>
-              p.id===prodId
+              p.id===
+              prodId
           );
 
 
-        if(idx===-1) return;
+        if(idx===-1)
+          return;
 
 
-        if(field==="name"){
+        if(
+          field==="name"
+        ){
 
           const name =
             input.value.trim();
 
-          if(!name) return;
+          if(!name)
+            return;
 
           items[idx].name =
             name;
@@ -4799,7 +5809,9 @@ document
         }
 
 
-        if(field==="price"){
+        if(
+          field==="price"
+        ){
 
           items[idx].price =
             Math.max(
@@ -4827,7 +5839,9 @@ document
 
         }catch(error){
 
-          console.error(error);
+          console.error(
+            error
+          );
 
           toast(
             "Erro ao salvar alteração",
@@ -4847,7 +5861,9 @@ document
 ========================================================= */
 
 document
-  .getElementById("btnAddCat")
+  .getElementById(
+    "btnAddCat"
+  )
   .addEventListener(
     "click",
     function(){
@@ -4858,7 +5874,11 @@ document
 
           '<h3>Nova categoria</h3>'+
 
-          '<button class="modal-close" data-close>✕</button>'+
+          '<button '+
+            'class="modal-close" '+
+            'data-close>'+
+            '✕'+
+          '</button>'+
 
         '</div>'+
 
@@ -4866,14 +5886,18 @@ document
 
           '<div class="center-form">'+
 
-            '<label>Nome da categoria</label>'+
+            '<label>'+
+              'Nome da categoria'+
+            '</label>'+
 
             '<input '+
               'type="text" '+
               'id="newCatName" '+
               'placeholder="Ex: Sobremesas...">'+
 
-            '<label>Emoji</label>'+
+            '<label>'+
+              'Emoji'+
+            '</label>'+
 
             '<input '+
               'type="text" '+
@@ -4885,7 +5909,9 @@ document
               'class="btn btn-green btn-block" '+
               'style="margin-top:16px;" '+
               'id="confirmNewCat">'+
+
               'Criar categoria'+
+
             '</button>'+
 
           '</div>'+
@@ -4966,7 +5992,9 @@ document
 
             }catch(error){
 
-              console.error(error);
+              console.error(
+                error
+              );
 
               toast(
                 "Erro ao criar categoria",
@@ -4987,13 +6015,16 @@ document
 ========================================================= */
 
 document
-  .getElementById("repPeriod")
+  .getElementById(
+    "repPeriod"
+  )
   .addEventListener(
     "change",
     function(){
 
       const custom =
-        this.value==="custom";
+        this.value===
+        "custom";
 
       document
         .getElementById(
@@ -5011,7 +6042,9 @@ document
 
 
 document
-  .getElementById("repStart")
+  .getElementById(
+    "repStart"
+  )
   .addEventListener(
     "change",
     renderReports
@@ -5019,7 +6052,9 @@ document
 
 
 document
-  .getElementById("repEnd")
+  .getElementById(
+    "repEnd"
+  )
   .addEventListener(
     "change",
     renderReports
@@ -5060,7 +6095,9 @@ function renderReports(){
     );
 
 
-  if(p==="yesterday"){
+  if(
+    p==="yesterday"
+  ){
 
     start.setDate(
       start.getDate()-1
@@ -5073,7 +6110,9 @@ function renderReports(){
   }
 
 
-  if(p==="7days"){
+  if(
+    p==="7days"
+  ){
 
     start.setDate(
       start.getDate()-6
@@ -5082,7 +6121,9 @@ function renderReports(){
   }
 
 
-  if(p==="month"){
+  if(
+    p==="month"
+  ){
 
     start =
       new Date(
@@ -5094,7 +6135,9 @@ function renderReports(){
   }
 
 
-  if(p==="custom"){
+  if(
+    p==="custom"
+  ){
 
     const sVal =
       document
@@ -5199,7 +6242,9 @@ function renderReports(){
         )
         +
         (
-          Number(h.total)||0
+          Number(
+            h.total
+          )||0
         );
 
 
@@ -5208,9 +6253,12 @@ function renderReports(){
           function(it){
 
             const qty =
-              Number(it.qty)||0;
+              Number(
+                it.qty
+              )||0;
 
-            totalItems+=qty;
+            totalItems+=
+              qty;
 
 
             if(
@@ -5225,11 +6273,14 @@ function renderReports(){
             }
 
 
-            itemSales[it.name].qty+=qty;
+            itemSales[it.name].qty+=
+              qty;
 
             itemSales[it.name].rev+=
               (
-                Number(it.price)||0
+                Number(
+                  it.price
+                )||0
               )
               *
               qty;
@@ -5253,11 +6304,14 @@ function renderReports(){
             }
 
 
-            categorySales[cat].qty+=qty;
+            categorySales[cat].qty+=
+              qty;
 
             categorySales[cat].rev+=
               (
-                Number(it.price)||0
+                Number(
+                  it.price
+                )||0
               )
               *
               qty;
@@ -5270,33 +6324,41 @@ function renderReports(){
 
 
   const sortedItems =
-    Object.keys(itemSales)
-      .map(
-        k => ({
-          name:k,
-          qty:itemSales[k].qty,
-          rev:itemSales[k].rev
-        })
-      )
-      .sort(
-        (a,b) =>
-          b.qty-a.qty
-      );
+    Object.keys(
+      itemSales
+    )
+    .map(
+      k => ({
+        name:k,
+        qty:
+          itemSales[k].qty,
+        rev:
+          itemSales[k].rev
+      })
+    )
+    .sort(
+      (a,b) =>
+        b.qty-a.qty
+    );
 
 
   const sortedCats =
-    Object.keys(categorySales)
-      .map(
-        k => ({
-          name:k,
-          qty:categorySales[k].qty,
-          rev:categorySales[k].rev
-        })
-      )
-      .sort(
-        (a,b) =>
-          b.rev-a.rev
-      );
+    Object.keys(
+      categorySales
+    )
+    .map(
+      k => ({
+        name:k,
+        qty:
+          categorySales[k].qty,
+        rev:
+          categorySales[k].rev
+      })
+    )
+    .sort(
+      (a,b) =>
+        b.rev-a.rev
+    );
 
 
   const topHtml =
@@ -5314,7 +6376,9 @@ function renderReports(){
             '<div>'+
 
               '<b>'+
-                escapeHtml(it.name)+
+                escapeHtml(
+                  it.name
+                )+
               '</b>'+
 
               '<br>'+
@@ -5327,7 +6391,9 @@ function renderReports(){
             '</div>'+
 
             '<div style="font-weight:800;color:var(--green);">'+
-              money(it.rev)+
+              money(
+                it.rev
+              )+
             '</div>'+
 
           '</div>'
@@ -5354,18 +6420,26 @@ function renderReports(){
           '<div class="top-item-row">'+
 
             '<div>'+
+
               '<b>'+
-                escapeHtml(c.name)+
+                escapeHtml(
+                  c.name
+                )+
               '</b>'+
+
               '<br>'+
+
               '<small style="color:var(--text-soft);">'+
                 c.qty+
                 ' itens'+
               '</small>'+
+
             '</div>'+
 
             '<div style="font-weight:800;color:var(--green);">'+
-              money(c.rev)+
+              money(
+                c.rev
+              )+
             '</div>'+
 
           '</div>'
@@ -5378,25 +6452,33 @@ function renderReports(){
 
 
   const paymentHtml =
-    Object.keys(paymentSales)
-      .map(
-        key =>
+    Object.keys(
+      paymentSales
+    )
+    .map(
+      key =>
 
-          '<div class="top-item-row">'+
+        '<div class="top-item-row">'+
 
-            '<div>'+
-              '<b>'+
-                paymentLabel(key)+
-              '</b>'+
-            '</div>'+
+          '<div>'+
 
-            '<div style="font-weight:800;color:var(--green);">'+
-              money(paymentSales[key])+
-            '</div>'+
+            '<b>'+
+              paymentLabel(
+                key
+              )+
+            '</b>'+
 
-          '</div>'
+          '</div>'+
 
-      ).join("");
+          '<div style="font-weight:800;color:var(--green);">'+
+            money(
+              paymentSales[key]
+            )+
+          '</div>'+
+
+        '</div>'
+
+    ).join("");
 
 
   document
@@ -5408,38 +6490,60 @@ function renderReports(){
       '<div class="rep-grid">'+
 
         '<div class="rep-card-stat">'+
-          '<div class="title">Faturamento</div>'+
+
+          '<div class="title">'+
+            'Faturamento'+
+          '</div>'+
+
           '<div class="val">'+
             money(totalRev)+
           '</div>'+
+
         '</div>'+
 
         '<div class="rep-card-stat">'+
-          '<div class="title">Vendas</div>'+
+
+          '<div class="title">'+
+            'Vendas'+
+          '</div>'+
+
           '<div class="val">'+
             totalOrders+
           '</div>'+
+
         '</div>'+
 
         '<div class="rep-card-stat">'+
-          '<div class="title">Ticket médio</div>'+
+
+          '<div class="title">'+
+            'Ticket médio'+
+          '</div>'+
+
           '<div class="val">'+
             money(ticket)+
           '</div>'+
+
         '</div>'+
 
         '<div class="rep-card-stat">'+
-          '<div class="title">Itens vendidos</div>'+
+
+          '<div class="title">'+
+            'Itens vendidos'+
+          '</div>'+
+
           '<div class="val">'+
             totalItems+
           '</div>'+
+
         '</div>'+
 
       '</div>'+
 
       '<div class="card">'+
 
-        '<h3>🏆 Produtos mais vendidos</h3>'+
+        '<h3>'+
+          '🏆 Produtos mais vendidos'+
+        '</h3>'+
 
         '<div style="margin-top:10px;">'+
           topHtml+
@@ -5449,7 +6553,9 @@ function renderReports(){
 
       '<div class="card">'+
 
-        '<h3>🍨 Categorias</h3>'+
+        '<h3>'+
+          '🍨 Categorias'+
+        '</h3>'+
 
         '<div style="margin-top:10px;">'+
           catHtml+
@@ -5459,14 +6565,18 @@ function renderReports(){
 
       '<div class="card">'+
 
-        '<h3>💳 Formas de pagamento</h3>'+
+        '<h3>'+
+          '💳 Formas de pagamento'+
+        '</h3>'+
 
         '<div style="margin-top:10px;">'+
+
           (
             paymentHtml
             ||
             '<div style="font-size:13px;color:var(--text-soft);">Nenhuma venda.</div>'
           )+
+
         '</div>'+
 
       '</div>';
@@ -5478,14 +6588,18 @@ function renderReports(){
    PWA / SERVICE WORKER
 ========================================================= */
 
-if("serviceWorker" in navigator){
+if(
+  "serviceWorker" in navigator
+){
 
   window.addEventListener(
     "load",
     function(){
 
       navigator.serviceWorker
-        .register("./sw.js")
+        .register(
+          "./sw.js"
+        )
         .then(
           function(){
 
@@ -5516,7 +6630,8 @@ if("serviceWorker" in navigator){
    INSTALAÇÃO PWA
 ========================================================= */
 
-let deferredInstallPrompt = null;
+let deferredInstallPrompt =
+  null;
 
 
 window.addEventListener(
@@ -5525,25 +6640,33 @@ window.addEventListener(
 
     e.preventDefault();
 
-    deferredInstallPrompt=e;
+    deferredInstallPrompt =
+      e;
 
     document
       .getElementById(
         "installBox"
       )
-      .classList.add("show");
+      .classList
+      .add(
+        "show"
+      );
 
   }
 );
 
 
 document
-  .getElementById("installBtn")
+  .getElementById(
+    "installBtn"
+  )
   .addEventListener(
     "click",
     async function(){
 
-      if(!deferredInstallPrompt){
+      if(
+        !deferredInstallPrompt
+      ){
 
         toast(
           "Seu navegador não disponibilizou a instalação."
@@ -5554,17 +6677,23 @@ document
       }
 
 
-      deferredInstallPrompt.prompt();
+      deferredInstallPrompt
+        .prompt();
 
-      await deferredInstallPrompt.userChoice;
+      await deferredInstallPrompt
+        .userChoice;
 
-      deferredInstallPrompt=null;
+      deferredInstallPrompt =
+        null;
 
       document
         .getElementById(
           "installBox"
         )
-        .classList.remove("show");
+        .classList
+        .remove(
+          "show"
+        );
 
     }
   );
