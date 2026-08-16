@@ -1,46 +1,128 @@
-const CACHE_NAME = "sorveteria-shell-v1";
-const SHELL_FILES = [
+const CACHE_NAME = "gelo-doce-v3";
+
+const APP_FILES = [
+  "./",
   "./index.html",
-  "./manifest.json",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "./manifest.json"
 ];
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", event => {
+
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_FILES))
+
+    caches
+      .open(CACHE_NAME)
+      .then(cache =>
+        cache.addAll(APP_FILES)
+      )
+
   );
+
   self.skipWaiting();
+
 });
 
-self.addEventListener("activate", (event) => {
+
+self.addEventListener("activate", event => {
+
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
+
+    caches
+      .keys()
+      .then(keys =>
+        Promise.all(
+          keys
+            .filter(key =>
+              key !== CACHE_NAME
+            )
+            .map(key =>
+              caches.delete(key)
+            )
+        )
+      )
+
   );
+
   self.clients.claim();
+
 });
 
-self.addEventListener("fetch", (event) => {
-  const url = new URL(event.request.url);
 
-  // Só cuida dos arquivos do próprio app (mesma origem).
-  // Tudo que vai para o Firebase/Firestore passa direto pela rede.
-  if (url.origin !== self.location.origin || event.request.method !== "GET") {
+self.addEventListener("fetch", event => {
+
+  /*
+    Não interceptamos requisições do Firebase.
+    O próprio Firestore controla o cache/offline.
+  */
+
+  if(
+    event.request.url.includes(
+      "googleapis.com"
+    )
+    ||
+    event.request.url.includes(
+      "gstatic.com"
+    )
+  ){
+
     return;
+
   }
 
+
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const network = fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
+
+    caches.match(event.request)
+      .then(cached => {
+
+        if(cached){
+
+          return cached;
+
+        }
+
+
+        return fetch(event.request)
+          .then(response => {
+
+            if(
+              !response
+              ||
+              response.status !== 200
+              ||
+              response.type === "opaque"
+            ){
+
+              return response;
+
+            }
+
+
+            const copy =
+              response.clone();
+
+
+            caches
+              .open(CACHE_NAME)
+              .then(cache =>
+                cache.put(
+                  event.request,
+                  copy
+                )
+              );
+
+
+            return response;
+
+          })
+          .catch(() =>
+            caches.match(
+              "./index.html"
+            )
+          );
+
+      })
+
   );
+
 });
