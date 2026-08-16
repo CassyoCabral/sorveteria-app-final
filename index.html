@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-<title>Sorveteria • Pedidos</title>
+<title>Sorveteria Gelo Doce • Pedidos</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#5C3D2E">
+<meta name="theme-color" content="#FFB6C1">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Sorveteria">
+<meta name="apple-mobile-web-app-title" content="Gelo Doce">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F4F7F5;
+    --bg:#F9F7F8;
     --surface:#FFFFFF;
-    --text:#2B2D42;
+    --text:#2D3142;
     --text-soft:#6C757D;
-    --border:#E2E8F0;
-    --brown:#5C3D2E;
-    --brown-light:#8B5E34;
+    --border:#E8ECEF;
+    --pink-header:#FFB6C1;
+    --pink-header-light:#FFD1DC;
+    --pink-text:#5C3A42;
     --green:#2A9D8F;
     --green-dark:#218376;
     --green-light:#E8F5F3;
@@ -48,17 +49,34 @@
   .wrap{max-width:560px; margin:0 auto; padding:0 16px;}
 
   header{
-    background: linear-gradient(135deg, var(--brown) 0%, var(--brown-light) 100%);
-    color:#fff;
+    background: linear-gradient(135deg, var(--pink-header) 0%, var(--pink-header-light) 100%);
+    color:var(--pink-text);
     padding:calc(22px + env(safe-area-inset-top, 0px)) 16px 34px;
     position:relative;
     overflow:hidden;
+    text-align:center;
   }
-  header .wrap{position:relative; z-index:2;}
-  header h1{font-size:22px; letter-spacing:.2px;}
-  header .sub{font-size:13px; opacity:.92; margin-top:4px; font-weight:600; display:flex; align-items:center; gap:6px;}
-  .dot{width:7px; height:7px; border-radius:50%; background:#BFFFDA; flex:none;}
-  .dot.off{background:#FFD1D1;}
+  header .wrap{
+    position:relative; 
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  header h1{font-size:22px; letter-spacing:.2px; font-weight:700;}
+  header .sub{
+    font-size:13px; 
+    opacity:.95; 
+    margin-top:6px; 
+    font-weight:600; 
+    display:inline-flex; 
+    align-items:center; 
+    justify-content:center;
+    gap:6px;
+  }
+  .dot{width:8px; height:8px; border-radius:50%; background:#2A9D8F; flex:none;}
+  .dot.off{background:#E76F51;}
   .wave{
     position:absolute; left:0; right:0; bottom:-1px; width:100%; height:26px; z-index:1;
   }
@@ -198,7 +216,6 @@
   .modal-head h3{font-size:17px;}
   .modal-close{background:none; border:none; font-size:22px; color:var(--text-soft); cursor:pointer;}
   
-  /* AJUSTE DE ESPAÇAMENTO PARA NÃO CORTAR ABAIXO DA TELA */
   .modal-body{
     padding:14px 16px calc(24px + env(safe-area-inset-bottom, 0px)); 
     overflow-y:auto;
@@ -224,7 +241,7 @@
 
   .toast{
     position:fixed; left:50%; transform:translateX(-50%); bottom:calc(86px + env(safe-area-inset-bottom, 0px)); z-index:200;
-    background:#233A32; color:#fff; padding:9px 16px; border-radius:24px; font-size:13px; font-weight:700;
+    background:#2D3142; color:#fff; padding:9px 16px; border-radius:24px; font-size:13px; font-weight:700;
     opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; max-width:88%; text-align:center;
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px);}
@@ -233,7 +250,7 @@
   .loading{ text-align:center; padding:60px 20px; color:var(--text-soft); font-weight:700;}
 
   .hist-summary{
-    background:linear-gradient(135deg, var(--green), var(--brown-light));
+    background:linear-gradient(135deg, var(--green), #3A867F);
     color:#fff; border-radius:var(--radius); padding:14px 16px; margin-bottom:14px;
     display:flex; justify-content:space-between; align-items:center;
   }
@@ -267,10 +284,10 @@
 
 <header>
   <div class="wrap">
-    <h1>🍦 Sorveteria — Pedidos</h1>
+    <h1>🍦 Sorveteria Gelo Doce — Pedidos</h1>
     <div class="sub"><span class="dot off" id="statusDot"></span><span id="headerSub">Conectando ao banco de dados...</span></div>
   </div>
-  <svg class="wave" viewBox="0 0 500 30" preserveAspectRatio="none"><path d="M0,15 Q40,30 80,15 T160,15 T240,15 T320,15 T400,15 T480,15 T560,15 V30 H0 Z" fill="#F4F7F5"></path></svg>
+  <svg class="wave" viewBox="0 0 500 30" preserveAspectRatio="none"><path d="M0,15 Q40,30 80,15 T160,15 T240,15 T320,15 T400,15 T480,15 T560,15 V30 H0 Z" fill="#F9F7F8"></path></svg>
 </header>
 
 <div class="wrap">
@@ -349,7 +366,7 @@
     {name:"Potes", emoji:"🥣", color:"#E9C46A"},
     {name:"Picolés de fruta", emoji:"🍉", color:"#E76F51"},
     {name:"Picolés de Leite", emoji:"🍦", color:"#3FB6DE"},
-    {name:"Eskimo", emoji:"🍫", color:"#5C3D2E"},
+    {name:"Eskimo", emoji:"🍫", color:"#8D5B4C"},
     {name:"Bebidas", emoji:"🥤", color:"#4FC3E8"},
     {name:"Shakes", emoji:"🧋", color:"#C77DFF"},
     {name:"Açai", emoji:"🫐", color:"#6A4C93"}
