@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-<title>Sorveteria Gelo Doce • Pedidos</title>
+<title>Sorveteria Gelo Doce</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFB6C1">
+<meta name="theme-color" content="#1E1E1E">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Gelo Doce">
+<meta name="apple-mobile-web-app-title" content="Sorveteria Gelo Doce">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,10 +48,24 @@
   }
   .wrap{max-width:560px; margin:0 auto; padding:0 16px;}
 
+  /* Top Bar (Barra Superior Preta Centralizada) */
+  .top-app-bar {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+    text-align: center;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px;
+    letter-spacing: 0.3px;
+    position: relative;
+    z-index: 10;
+  }
+
   header{
     background: linear-gradient(135deg, var(--pink-header) 0%, var(--pink-header-light) 100%);
     color:var(--pink-text);
-    padding:calc(22px + env(safe-area-inset-top, 0px)) 16px 34px;
+    padding: 22px 16px 34px;
     position:relative;
     overflow:hidden;
     text-align:center;
@@ -281,6 +295,11 @@
 </style>
 </head>
 <body>
+
+<!-- Barra Superior Centralizada -->
+<div class="top-app-bar">
+  Sorveteria Gelo Doce
+</div>
 
 <header>
   <div class="wrap">
