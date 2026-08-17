@@ -60,7 +60,6 @@ nav.tabs button.active{color:var(--green);}
 /* STATUS */
 .order-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;padding:4px 7px;border-radius:20px;margin-top:5px;background:var(--green-light);color:var(--green);}
 .order-status.warn{background:#FDF3DD;color:#B8860B;}
-.order-status.cancelled{background:#FBE1DC;color:var(--danger);}
 /* ITEMS */
 .item-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:14px;}
 .item-row .iname{flex:1;min-width:0;}
@@ -230,7 +229,6 @@ body.dark-theme select{background:#2E333A;color:var(--text);}
 body.dark-theme .product-status{background:#33383F;}
 body.dark-theme .drag-handle-bar{background:#4A505A;}
 body.dark-theme .order-status.warn{background:#4A3E1E;color:#F0CE7A;}
-body.dark-theme .order-status.cancelled{background:#4A2A26;color:#F0A18F;}
 body.dark-theme .install-box{background:var(--green-light);}
 body.dark-theme .offline-banner{background:#4A3E1E;color:#F0CE7A;}
 /* RESPONSIVE */
@@ -845,7 +843,7 @@ function renderOrders() {
         const itemsHtml = items.length ? items.map(function (it) {
             return (`<div class="item-row"><div class="iname">${escapeHtml(it.name)}<small>${escapeHtml(it.categoryName || "")} • ${money(it.price)} un.</small></div><div class="qty-ctrl"><button data-act="dec" data-order="${o.id}" data-item="${it.id}">−</button><span>${it.qty}</span><button data-act="inc" data-order="${o.id}" data-item="${it.id}">+</button></div><div class="iprice">${money(it.price * it.qty)}</div><button class="irm" data-act="rm" data-order="${o.id}" data-item="${it.id}">✕</button></div>`);
         }).join("") : `<div style="font-size:13px;color:var(--text-soft);padding:6px 0;">Nenhum item ainda.</div>`;
-        return (`<div class="card order-card ${isOpen ? "open" : ""}" data-order="${o.id}"><div class="top" data-act="toggle" data-order="${o.id}"><div><div class="name">Comanda ${escapeHtml(o.customerName)}</div><div class="meta">${items.length} item(ns) • ${timeLabel(o.createdAt)}</div><div class="order-status ${statusClass}">● ${statusText}</div></div><div style="display:flex;align-items:center;gap:8px;"><div class="total">${money(paid > 0 ? remaining : total)}</div><span class="chev">▾</span></div></div><div class="items">${itemsHtml}<div class="row-btns"><button class="btn btn-green" data-act="additem" data-order="${o.id}">+ Item</button><button class="btn btn-blue" data-act="checkout" data-order="${o.id}">💳 Fechar</button></div><div class="row-btns"><button class="btn btn-danger-outline btn-block" data-act="cancel" data-order="${o.id}">🚫 Cancelar Comanda</button></div></div></div>`);
+        return (`<div class="card order-card ${isOpen ? "open" : ""}" data-order="${o.id}"><div class="top" data-act="toggle" data-order="${o.id}"><div><div class="name">Comanda ${escapeHtml(o.customerName)}</div><div class="meta">${items.length} item(ns) • ${timeLabel(o.createdAt)}</div><div class="order-status ${statusClass}">● ${statusText}</div></div><div style="display:flex;align-items:center;gap:8px;"><div class="total">${money(paid > 0 ? remaining : total)}</div><span class="chev">▾</span></div></div><div class="items">${itemsHtml}<div class="row-btns"><button class="btn btn-green" data-act="additem" data-order="${o.id}">+ Item</button><button class="btn btn-blue" data-act="checkout" data-order="${o.id}">💳 Fechar</button></div></div></div>`);
     }).join("");
 }
 document.getElementById("orderSearch").addEventListener("input", function () {
@@ -872,10 +870,6 @@ document.getElementById("ordersList").addEventListener("click", async function (
     }
     if (act === "checkout") {
         openCheckout(orderId);
-        return;
-    }
-    if (act === "cancel") {
-        cancelOrder(order);
         return;
     }
     if (act === "inc" || act === "dec" || act === "rm") {
@@ -1226,41 +1220,7 @@ async function finishSale(order, discount, payment, previousPayments, finalAmoun
         toast("Erro ao finalizar venda. A venda não foi concluída.", true);
     }
 }
-async function cancelOrder(order) {
-    if (!confirm(`Cancelar a comanda ${order.customerName}? Ela será movida para o Histórico marcada como cancelada. Esta ação não pode ser desfeita.`)) {
-        return;
-    }
-    const subtotal = orderTotal(order);
-    const paidTotal = paidSoFar(order);
-    try {
-        const batch = writeBatch(db);
-        const historyRef = doc(historicoCol);
-        batch.set(historyRef, {
-            customerName: order.customerName,
-            items: order.items || [],
-            subtotal: subtotal,
-            discount: Number(order.discount) || 0,
-            total: 0,
-            paidTotal: paidTotal,
-            payments: order.payments || [],
-            paymentMethod: "cancelado",
-            cancelled: true,
-            closedAt: Date.now(),
-            createdAt: order.createdAt || Date.now()
-        });
-        batch.delete(doc(db, "pedidos", order.id));
-        await batch.commit();
-        if (state.openOrderId === order.id) {
-            state.openOrderId = null;
-        }
-        closeModal();
-        toast("Comanda cancelada");
-    }
-    catch (error) {
-        console.error(error);
-        toast("Erro ao cancelar comanda", true);
-    }
-}
+function dayLabel(ts) {
     const d = new Date(ts);
     const today = new Date();
     const yest = new Date();
@@ -1297,8 +1257,8 @@ function renderHistory() {
     const term = state.historySearch.trim().toLowerCase();
     const history = state.history.filter(h => !term || String(h.customerName || "").toLowerCase().includes(term));
     const todayStr = new Date().toDateString();
-    const totalToday = state.history.filter(h => !h.cancelled && new Date(h.closedAt).toDateString() === todayStr).reduce((s, h) => s + (Number(h.total) || 0), 0);
-    const todayOrders = state.history.filter(h => !h.cancelled && new Date(h.closedAt).toDateString() === todayStr).length;
+    const totalToday = state.history.filter(h => new Date(h.closedAt).toDateString() === todayStr).reduce((s, h) => s + (Number(h.total) || 0), 0);
+    const todayOrders = state.history.filter(h => new Date(h.closedAt).toDateString() === todayStr).length;
     sumEl.innerHTML = `<div class="hist-summary"><div><div class="lbl">TOTAL VENDIDO HOJE</div><div class="val">${money(totalToday)}</div><div style="font-size:11px;margin-top:3px;opacity:.9;">${todayOrders} venda(s)</div></div><div style="font-size:28px;">💰</div></div>`;
     if (!history.length) {
         el.innerHTML = `<div class="empty"><span class="ic">📖</span>${term ? "Nenhuma comanda encontrada." : "Nenhuma conta fechada ainda."}</div>`;
@@ -1333,9 +1293,7 @@ function renderHistory() {
             }
             const summary = summaryParts.join(" | ");
             const paymentsBreak = (h.payments || []).length > 1 ? `<div style="font-size:11px;color:var(--text-soft);margin-top:5px;">Fechamento parcial: ${h.payments.map(p => `${paymentLabel(p.method)} ${money(p.amount)}`).join(" + ")}</div>` : "";
-            const statusLine = h.cancelled ? `<div class="order-status cancelled">● Cancelada</div>` : "";
-            const totalDisplay = h.cancelled ? `<span style="color:var(--text-soft);text-decoration:line-through;">${money(h.subtotal)}</span>` : money(h.total);
-            return (`<div class="hist-card"><div class="top"><div><div class="name">Comanda ${escapeHtml(h.customerName)}</div><div class="time">${timeLabel(h.closedAt)} • ${h.cancelled ? "Cancelada" : paymentLabel(h.paymentMethod)}</div>${statusLine}</div><div class="total">${totalDisplay}</div></div><div class="items-summary">${escapeHtml(summary)}</div>${Number(h.discount) > 0 && !h.cancelled ? `<div style="font-size:11px;color:var(--danger);margin-top:5px;">Desconto: ${money(h.discount)}</div>` : ''}${paymentsBreak}<div class="hist-actions"><button class="icon-btn danger" data-act="rmhist" data-hist="${h.id}">🗑 remover</button></div></div>`);
+            return (`<div class="hist-card"><div class="top"><div><div class="name">Comanda ${escapeHtml(h.customerName)}</div><div class="time">${timeLabel(h.closedAt)} • ${paymentLabel(h.paymentMethod)}</div></div><div class="total">${money(h.total)}</div></div><div class="items-summary">${escapeHtml(summary)}</div>${Number(h.discount) > 0 ? `<div style="font-size:11px;color:var(--danger);margin-top:5px;">Desconto: ${money(h.discount)}</div>` : ''}${paymentsBreak}<div class="hist-actions"><button class="icon-btn danger" data-act="rmhist" data-hist="${h.id}">🗑 remover</button></div></div>`);
         }).join("");
         return (`<div class="hist-day-label">${g.label}</div>${cards}`);
     }).join("");
@@ -1644,8 +1602,6 @@ function renderReports() {
         }
     }
     const filtered = state.history.filter(function (h) {
-        if (h.cancelled)
-            return false;
         const t = new Date(h.closedAt).getTime();
         return (t >= start.getTime() && t <= end.getTime());
     });
